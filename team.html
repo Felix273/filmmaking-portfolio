@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team — FOB Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #f5f2ed;
+            --red: #c8102e;
+            --gray: #8a8580;
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Cursor */
+        .cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+        }
+        .cursor-ring {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(245,242,237,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+        }
+        body:has(.member-card:hover) .cursor { width: 56px; height: 56px; background: var(--red); }
+        body:has(.member-card:hover) .cursor-ring { opacity: 0; }
+
+        /* Nav */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 28px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { opacity: 0.4; }
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            padding: 180px 48px 100px;
+            border-bottom: 1px solid rgba(245,242,237,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: end;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: clamp(64px, 9vw, 116px);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -2px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.5s ease forwards;
+        }
+
+        .page-title em {
+            font-style: italic;
+            display: block;
+            color: var(--gray);
+        }
+
+        .page-intro {
+            opacity: 0;
+            animation: fadeUp 0.9s 0.75s ease forwards;
+        }
+
+        .page-intro p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .page-intro-count {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── LEADERSHIP ── */
+        .leadership-section {
+            padding: 120px 48px 80px;
+        }
+
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 56px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(245,242,237,0.1);
+        }
+
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .member-card {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            cursor: none;
+        }
+
+        .member-card-inner {
+            aspect-ratio: 3/4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            filter: grayscale(25%) contrast(1.05);
+            transition: transform 0.9s cubic-bezier(0.4,0,0.2,1), filter 0.5s;
+        }
+
+        .member-card:hover img {
+            transform: scale(1.06);
+            filter: grayscale(0%) contrast(1.1);
+        }
+
+        .member-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                rgba(10,10,10,0.95) 0%,
+                rgba(10,10,10,0.4) 45%,
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 36px 32px;
+        }
+
+        .member-card:hover .member-overlay { opacity: 1; }
+
+        .member-bio {
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(245,242,237,0.75);
+            margin-bottom: 20px;
+        }
+
+        .member-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .member-link {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(245,242,237,0.3);
+            padding-bottom: 2px;
+            transition: border-color 0.3s;
+        }
+
+        .member-link:hover { border-color: var(--white); }
+
+        .member-info {
+            padding: 28px 32px;
+            background: #0f0f0f;
+            border-top: 1px solid rgba(245,242,237,0.06);
+        }
+
+        .member-role {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+
+        .member-name {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        /* ── TEAM GRID ── */
+        .team-section {
+            padding: 0 48px 140px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3px;
+        }
+
+        .team-member {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            cursor: none;
+        }
+
+        .team-member-inner {
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            filter: grayscale(30%);
+            transition: transform 0.7s cubic-bezier(0.4,0,0.2,1), filter 0.5s;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        .team-member-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10,10,10,0.7);
+            opacity: 0;
+            transition: opacity 0.35s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+        }
+
+        .team-member:hover .team-member-overlay { opacity: 1; }
+
+        .team-member-role {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 4px;
+        }
+
+        .team-member-name {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        /* ── JOIN BAND ── */
+        .join-section {
+            position: relative;
+            background: var(--white);
+            padding: 140px 48px;
+            overflow: hidden;
+        }
+
+        .join-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: center;
+        }
+
+        .join-heading {
+            font-family: var(--font-serif);
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -2px;
+            color: var(--black);
+        }
+
+        .join-heading em {
+            font-style: italic;
+            color: #aaa;
+        }
+
+        .join-body p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        .join-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+            text-decoration: none;
+            color: var(--black);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--black);
+            padding-bottom: 4px;
+            transition: gap 0.3s, color 0.3s;
+        }
+
+        .join-cta:hover { gap: 28px; color: var(--red); border-color: var(--red); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(245,242,237,0.1);
+            padding: 80px 48px 48px;
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .footer-tagline { font-size: 12px; color: var(--gray); line-height: 1.7; }
+        .footer-col-title {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-links a {
+            color: rgba(245,242,237,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--white); }
+        .footer-bottom {
+            border-top: 1px solid rgba(245,242,237,0.08);
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-copy { font-size: 11px; color: var(--gray); }
+        .footer-social { display: flex; gap: 32px; }
+        .footer-social a {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-social a:hover { color: var(--white); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-header { grid-template-columns: 1fr; gap: 40px; }
+            .leadership-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: repeat(3, 1fr); }
+            .join-grid { grid-template-columns: 1fr; gap: 48px; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav { padding: 20px 24px; }
+            .nav-links { gap: 20px; }
+            .page-header { padding: 140px 24px 60px; }
+            .leadership-section, .team-section { padding: 60px 24px; }
+            .leadership-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .join-section { padding: 80px 24px; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <script src="js/data.js"></script>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Nav -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="work.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html" class="active">Team</a></li>
+            
+        </ul>
+        <a href="index.html" class="nav-logo">FOB Media</a>
+        <ul class="nav-links">
+            <li><a href="ideas.html">Ideas</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1 class="page-title">The<br><em>People</em></h1>
+        <div class="page-intro">
+            <p>Great films are made by great people. We've built a team of directors, cinematographers, editors, and strategists who share one obsession — making work that matters.</p>
+            <p class="page-intro-count">24 Creatives · Nairobi, Kenya</p>
+        </div>
+    </header>
+
+    <!-- Leadership -->
+    <section class="leadership-section">
+        <p class="section-label">Leadership</p>
+        <div class="leadership-grid" id="leadershipGrid"></div>
+    </section>
+
+    <!-- Full Team -->
+    <section class="team-section">
+        <p class="section-label">The Team</p>
+        <div class="team-grid" id="teamGrid"></div>
+    </section>
+
+    <!-- Join -->
+    <section class="join-section">
+        <div class="join-grid">
+            <h2 class="join-heading">Want to<br>work with<br><em>us?</em></h2>
+            <div class="join-body">
+                <p>We're always looking for exceptional people — not just technically skilled, but genuinely passionate about the craft of filmmaking and the power of story.</p>
+                <p>If that sounds like you, we'd love to hear from you. Send us your reel, your CV, and tell us what kind of work gets you out of bed in the morning.</p>
+                <a href="careers.html" class="join-cta">View Open Roles →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand">FOB<br>Media</div>
+                <p class="footer-tagline">Creating impact through film.<br>Nairobi, Kenya.</p>
+            </div>
+            <div>
+                <p class="footer-col-title">Navigation</p>
+                <ul class="footer-links">
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="ideas.html">Ideas</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="footer-col-title">Get In Touch</p>
+                <ul class="footer-links">
+                    <li><a href="/cdn-cgi/l/email-protection#e58d8089898aa5838a878880818c84cb868a88"><span class="__cf_email__" data-cfemail="b1d9d4dddddef1d7ded3dcd4d5d8d09fd2dedc">[email&#160;protected]</span></a></li>
+                    <li><a href="tel:+254700000000">+254 700 000 000</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2025 FOB Media. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Vimeo</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        FOBData.initCursor();
+
+        FOBData.load().then(() => {
+            document.getElementById('leadershipGrid').innerHTML =
+                FOBData.getLeadership().map(m => FOBData.renderLeaderCard(m)).join('');
+
+            document.getElementById('teamGrid').innerHTML =
+                FOBData.getTeamMembers().map(m => FOBData.renderTeamCard(m)).join('');
+
+            FOBData.observeFadeIn('.member-card, .team-member');
+        });
+
+        // Scroll fade-in
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.member-card, .team-member').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(24px)';
+            el.style.transition = `opacity 0.7s ${i * 0.1}s ease, transform 0.7s ${i * 0.1}s ease`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

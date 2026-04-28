@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — FOB Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #f5f2ed;
+            --red: #c8102e;
+            --gray: #8a8580;
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+            min-height: 100vh;
+        }
+
+        /* Cursor */
+        .cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+        .cursor-ring {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(245,242,237,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+        }
+        body:has(input:focus) .cursor,
+        body:has(textarea:focus) .cursor,
+        body:has(select:focus) .cursor { background: var(--red); }
+
+        /* Nav */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 28px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { opacity: 0.4; }
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── LEFT PANEL ── */
+        .contact-left {
+            position: relative;
+            background: var(--black);
+            padding: 180px 64px 80px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid rgba(245,242,237,0.08);
+        }
+
+        .contact-eyebrow {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s ease forwards;
+        }
+
+        .contact-title {
+            font-family: var(--font-serif);
+            font-size: clamp(48px, 5.5vw, 80px);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.55s ease forwards;
+        }
+
+        .contact-title em {
+            font-style: italic;
+            display: block;
+            color: var(--gray);
+        }
+
+        .contact-statement {
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--gray);
+            max-width: 400px;
+            margin-bottom: 64px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.7s ease forwards;
+        }
+
+        .contact-details {
+            opacity: 0;
+            animation: fadeUp 0.8s 0.85s ease forwards;
+        }
+
+        .contact-detail-group {
+            margin-bottom: 40px;
+        }
+
+        .contact-detail-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        .contact-detail-value {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s;
+            line-height: 1.5;
+        }
+
+        .contact-detail-value:hover { color: var(--red); }
+
+        .contact-social {
+            display: flex;
+            gap: 24px;
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(245,242,237,0.08);
+        }
+
+        .social-link {
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover { color: var(--white); }
+
+        /* Background image on left */
+        .contact-left-bg {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 35%;
+            background-image: url('https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=900&h=600&fit=crop&q=80');
+            background-size: cover;
+            background-position: center top;
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 100%);
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        /* ── RIGHT PANEL ── */
+        .contact-right {
+            background: #0d0d0d;
+            padding: 180px 48px 80px 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-heading {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 56px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s ease forwards;
+        }
+
+        /* Form */
+        .contact-form {
+            opacity: 0;
+            animation: fadeUp 0.9s 0.8s ease forwards;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-field {
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .form-field:focus-within label { color: var(--white); }
+
+        .form-field input,
+        .form-field textarea,
+        .form-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(245,242,237,0.15);
+            color: var(--white);
+            font-family: var(--font-sans);
+            font-size: 15px;
+            padding: 12px 0;
+            outline: none;
+            transition: border-color 0.3s;
+            cursor: none;
+            -webkit-appearance: none;
+        }
+
+        .form-field select {
+            background: transparent;
+            color: var(--white);
+        }
+
+        .form-field select option {
+            background: #1a1a1a;
+            color: var(--white);
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus,
+        .form-field select:focus {
+            border-bottom-color: var(--white);
+        }
+
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: rgba(245,242,237,0.2);
+            font-size: 14px;
+        }
+
+        /* Animated underline */
+        .form-field::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--red);
+            transition: width 0.4s ease;
+        }
+
+        .form-field:focus-within::after { width: 100%; }
+
+        .form-field textarea {
+            resize: none;
+            height: 100px;
+            line-height: 1.7;
+        }
+
+        /* Budget selector */
+        .budget-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .budget-btn {
+            background: transparent;
+            border: 1px solid rgba(245,242,237,0.15);
+            color: var(--gray);
+            padding: 8px 18px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: none;
+            transition: all 0.25s;
+        }
+
+        .budget-btn:hover { border-color: rgba(245,242,237,0.4); color: var(--white); }
+        .budget-btn.selected { background: var(--white); color: var(--black); border-color: var(--white); }
+
+        /* Submit */
+        .form-submit {
+            margin-top: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-submit {
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            padding: 18px 56px;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: none;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--red);
+            transform: translateX(-101%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .btn-submit:hover::after { transform: translateX(0); }
+        .btn-submit:hover { color: var(--white); }
+
+        .btn-submit span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-note {
+            font-size: 11px;
+            color: var(--gray);
+            line-height: 1.6;
+            max-width: 200px;
+            text-align: right;
+        }
+
+        /* Success state */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .form-success.visible { display: block; }
+
+        .success-icon {
+            width: 56px; height: 56px;
+            border: 1px solid var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 22px;
+        }
+
+        .success-title {
+            font-family: var(--font-serif);
+            font-size: 36px;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .success-text {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(245,242,237,0.1);
+            padding: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy { font-size: 11px; color: var(--gray); }
+        .footer-social { display: flex; gap: 32px; }
+        .footer-social a {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-social a:hover { color: var(--white); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contact-layout { grid-template-columns: 1fr; }
+            .contact-left { padding: 160px 48px 80px; border-right: none; border-bottom: 1px solid rgba(245,242,237,0.08); }
+            .contact-right { padding: 80px 48px; }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav { padding: 20px 24px; }
+            .nav-links { gap: 20px; }
+            .contact-left { padding: 140px 24px 60px; }
+            .contact-right { padding: 60px 24px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .form-submit { flex-direction: column; gap: 24px; align-items: flex-start; }
+            .form-note { text-align: left; max-width: 100%; }
+            footer { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Nav -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="work.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            
+        </ul>
+        <a href="index.html" class="nav-logo">FOB Media</a>
+        <ul class="nav-links">
+            <li><a href="ideas.html">Ideas</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="contact-layout">
+
+        <!-- Left -->
+        <div class="contact-left">
+            <div class="contact-left-bg"></div>
+            <div>
+                <p class="contact-eyebrow">Start a Project</p>
+                <h1 class="contact-title">Let's Create<br><em>Together.</em></h1>
+                <p class="contact-statement">We take on a limited number of projects each year — which means every client gets our full attention. Tell us what you're building and let's see if we're the right fit.</p>
+            </div>
+            <div class="contact-details">
+                <div class="contact-detail-group">
+                    <p class="contact-detail-label">Email</p>
+                    <a href="/cdn-cgi/l/email-protection#7a121f1616153a1c1518171f1e131b54191517" class="contact-detail-value"><span class="__cf_email__" data-cfemail="b2dad7dededdf2d4ddd0dfd7d6dbd39cd1dddf">[email&#160;protected]</span></a>
+                </div>
+                <div class="contact-detail-group">
+                    <p class="contact-detail-label">Phone</p>
+                    <a href="tel:+254700000000" class="contact-detail-value">+254 700 000 000</a>
+                </div>
+                <div class="contact-detail-group">
+                    <p class="contact-detail-label">Location</p>
+                    <span class="contact-detail-value">Westlands, Nairobi<br>Kenya</span>
+                </div>
+                <div class="contact-social">
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Vimeo</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right -->
+        <div class="contact-right">
+            <p class="form-heading">Project Brief</p>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="James Odhiambo" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="james@company.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="company">Company / Brand</label>
+                        <input type="text" id="company" name="company" placeholder="Your company">
+                    </div>
+                    <div class="form-field">
+                        <label for="type">Project Type</label>
+                        <select id="type" name="type">
+                            <option value="" disabled selected>Select type</option>
+                            <option>Brand Film</option>
+                            <option>Commercial</option>
+                            <option>Documentary</option>
+                            <option>Music Video</option>
+                            <option>Feature Film</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Estimated Budget</label>
+                    <div class="budget-options">
+                        <button type="button" class="budget-btn" data-value="under-5k">Under $5K</button>
+                        <button type="button" class="budget-btn" data-value="5k-20k">$5K – $20K</button>
+                        <button type="button" class="budget-btn" data-value="20k-50k">$20K – $50K</button>
+                        <button type="button" class="budget-btn" data-value="50k-plus">$50K+</button>
+                        <button type="button" class="budget-btn" data-value="tbd">Let's Talk</button>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="message">Tell Us About Your Project</label>
+                    <textarea id="message" name="message" placeholder="What are you trying to say? Who's the audience? What's the deadline?" required></textarea>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn-submit"><span>Send Brief →</span></button>
+                    <p class="form-note">We reply within 24 hours, usually much faster.</p>
+                </div>
+            </form>
+
+            <div class="form-success" id="formSuccess">
+                <div class="success-icon">✓</div>
+                <h2 class="success-title">Message Received.</h2>
+                <p class="success-text">Thank you for reaching out. We'll review your brief and get back to you within 24 hours.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-copy">© 2025 FOB Media. All rights reserved.</p>
+        <div class="footer-social">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Vimeo</a>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursorRing');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Budget selector
+        document.querySelectorAll('.budget-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            });
+        });
+
+        // Form submit
+        document.getElementById('contactForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            const success = document.getElementById('formSuccess');
+            form.style.opacity = '0';
+            form.style.transform = 'translateY(-16px)';
+            form.style.transition = 'opacity 0.4s, transform 0.4s';
+            setTimeout(() => {
+                form.style.display = 'none';
+                success.classList.add('visible');
+                success.style.opacity = '0';
+                success.style.transform = 'translateY(16px)';
+                success.style.transition = 'opacity 0.5s, transform 0.5s';
+                }, 400);});

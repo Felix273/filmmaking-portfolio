@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — FOB Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #f5f2ed;
+            --red: #c8102e;
+            --gray: #8a8580;
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Cursor */
+        .cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+        .cursor-ring {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(245,242,237,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+        }
+
+        /* Nav */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 28px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { opacity: 0.4; }
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* ── HERO ── */
+        .about-hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .about-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1800&h=1200&fit=crop&q=80');
+            background-size: cover;
+            background-position: center 30%;
+            filter: grayscale(30%) brightness(0.6) contrast(1.1);
+            transform: scale(1.04);
+            animation: heroIn 1.8s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+
+        @keyframes heroIn {
+            from { transform: scale(1.1); opacity: 0.5; }
+            to   { transform: scale(1.04); opacity: 1; }
+        }
+
+        .about-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                rgba(10,10,10,0.95) 0%,
+                rgba(10,10,10,0.3) 50%,
+                rgba(10,10,10,0.1) 100%);
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 48px 72px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: end;
+        }
+
+        .about-hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(56px, 8vw, 110px);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -2px;
+            color: var(--white);
+            opacity: 0;
+            animation: fadeUp 0.9s 0.7s ease forwards;
+        }
+
+        .about-hero-title em {
+            font-style: italic;
+            display: block;
+            color: var(--gray);
+        }
+
+        .about-hero-right {
+            opacity: 0;
+            animation: fadeUp 0.9s 1s ease forwards;
+        }
+
+        .about-hero-label {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 20px;
+        }
+
+        .about-hero-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(245,242,237,0.65);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── PULL QUOTE ── */
+        .pull-quote-section {
+            padding: 140px 48px;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 64px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pull-quote-line {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding-top: 12px;
+        }
+
+        .pull-quote-dash {
+            width: 1px;
+            height: 80px;
+            background: var(--red);
+        }
+
+        .pull-quote-label {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+            writing-mode: vertical-rl;
+        }
+
+        .pull-quote-text {
+            font-family: var(--font-serif);
+            font-size: clamp(28px, 4vw, 52px);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.3;
+            color: var(--white);
+        }
+
+        .pull-quote-text strong {
+            font-style: normal;
+            font-weight: 900;
+            color: var(--white);
+        }
+
+        /* ── STORY SECTION ── */
+        .story-section {
+            background: var(--white);
+            padding: 140px 48px;
+        }
+
+        .story-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: start;
+        }
+
+        .story-left {}
+
+        .story-eyebrow {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 32px;
+        }
+
+        .story-heading {
+            font-family: var(--font-serif);
+            font-size: clamp(36px, 4vw, 56px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            color: var(--black);
+            margin-bottom: 48px;
+        }
+
+        .story-image {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            filter: grayscale(15%);
+        }
+
+        .story-right {
+            padding-top: 80px;
+        }
+
+        .story-body p {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #444;
+            margin-bottom: 28px;
+        }
+
+        .story-body p:first-child {
+            font-size: 18px;
+            line-height: 1.75;
+            color: var(--black);
+            font-weight: 400;
+        }
+
+        .story-divider {
+            width: 48px;
+            height: 2px;
+            background: var(--red);
+            margin: 48px 0;
+        }
+
+        .story-stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .story-stat {}
+
+        .story-stat-number {
+            font-family: var(--font-serif);
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--black);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .story-stat-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        /* ── VALUES ── */
+        .values-section {
+            padding: 140px 48px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .values-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: end;
+            margin-bottom: 80px;
+            border-bottom: 1px solid rgba(245,242,237,0.1);
+            padding-bottom: 48px;
+        }
+
+        .values-title {
+            font-family: var(--font-serif);
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -1px;
+        }
+
+        .values-title em { font-style: italic; color: var(--gray); }
+
+        .values-intro {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--gray);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: rgba(245,242,237,0.08);
+        }
+
+        .value-item {
+            background: var(--black);
+            padding: 56px 48px;
+            transition: background 0.4s;
+        }
+
+        .value-item:hover { background: #111; }
+
+        .value-number {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--red);
+            margin-bottom: 32px;
+        }
+
+        .value-name {
+            font-family: var(--font-serif);
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+            line-height: 1.15;
+        }
+
+        .value-desc {
+            font-size: 13px;
+            line-height: 1.85;
+            color: var(--gray);
+        }
+
+        /* ── PARALLAX BAND ── */
+        .parallax-band {
+            position: relative;
+            height: 60vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallax-band-bg {
+            position: absolute;
+            inset: -20%;
+            background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1800&h=900&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: grayscale(50%) brightness(0.25);
+        }
+
+        .parallax-band-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .parallax-band-text p {
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 24px;
+        }
+
+        .parallax-band-text h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 5vw, 72px);
+            font-weight: 900;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.2;
+            max-width: 800px;
+        }
+
+        /* ── CLIENTS ── */
+        .clients-section {
+            padding: 120px 48px;
+            border-top: 1px solid rgba(245,242,237,0.08);
+        }
+
+        .clients-label {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .clients-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+
+        .client-name {
+            font-family: var(--font-serif);
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 700;
+            color: rgba(245,242,237,0.2);
+            padding: 20px 40px;
+            transition: color 0.4s;
+            cursor: default;
+        }
+
+        .client-name:hover { color: var(--white); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(245,242,237,0.1);
+            padding: 80px 48px 48px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline { font-size: 12px; color: var(--gray); line-height: 1.7; }
+
+        .footer-col-title {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+        .footer-links a {
+            color: rgba(245,242,237,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(245,242,237,0.08);
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy { font-size: 11px; color: var(--gray); }
+        .footer-social { display: flex; gap: 32px; }
+        .footer-social a {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-social a:hover { color: var(--white); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-hero-content { grid-template-columns: 1fr; gap: 32px; }
+            .story-grid { grid-template-columns: 1fr; gap: 60px; }
+            .story-right { padding-top: 0; }
+            .values-header { grid-template-columns: 1fr; gap: 32px; }
+            .values-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .pull-quote-section { grid-template-columns: 1fr; }
+            .pull-quote-line { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav { padding: 20px 24px; }
+            .nav-links { gap: 20px; }
+            .about-hero-content { padding: 0 24px 48px; }
+            .pull-quote-section { padding: 80px 24px; }
+            .story-section { padding: 80px 24px; }
+            .values-section { padding: 80px 24px; }
+            .clients-section { padding: 80px 24px; }
+            .story-stat-row { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; }
+            .client-name { padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Nav -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="work.html">Work</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            
+        </ul>
+        <a href="index.html" class="nav-logo">FOB Media</a>
+        <ul class="nav-links">
+            <li><a href="ideas.html">Ideas</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="about-hero-bg"></div>
+        <div class="about-hero-overlay"></div>
+        <div class="about-hero-content">
+            <h1 class="about-hero-title">We Are<br><em>Storytellers.</em></h1>
+            <div class="about-hero-right">
+                <p class="about-hero-label">Nairobi · Est. 2020</p>
+                <p class="about-hero-text">A full-service film production house built on the belief that the most powerful thing a brand can do is tell a true story — beautifully.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pull Quote -->
+    <section class="pull-quote-section">
+        <div class="pull-quote-line">
+            <div class="pull-quote-dash"></div>
+            <span class="pull-quote-label">Philosophy</span>
+        </div>
+        <blockquote class="pull-quote-text">
+            "We don't make content. We don't make videos. We make <strong>cinema</strong> — and we believe every frame, for every client, deserves that level of intention."
+        </blockquote>
+    </section>
+
+    <!-- Story -->
+    <section class="story-section">
+        <div class="story-grid">
+            <div class="story-left">
+                <p class="story-eyebrow">Our Story</p>
+                <h2 class="story-heading">Born from a love of the moving image.</h2>
+                <img
+                    src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?w=900&h=1100&fit=crop&q=80"
+                    alt="FOB Media on set"
+                    class="story-image"
+                    loading="lazy"
+                >
+            </div>
+            <div class="story-right">
+                <div class="story-body">
+                    <p>Founded in Nairobi in 2020, FOB Media was born from a simple conviction: that Africa has stories worth telling, and the world is ready to hear them.</p>
+                    <p>We started as a small team of three — a director, a cinematographer, and a producer — working out of a single office in Westlands. What we lacked in resources, we made up for in obsession. Every frame mattered. Every cut had to earn its place.</p>
+                    <p>Five years later, we've grown into a full-service production house with a team of 24 creatives, technicians, and strategists. We've shot in 12 countries, worked with global brands and independent artists alike, and built a body of work we're genuinely proud of.</p>
+                    <p>But the conviction hasn't changed. We still believe the best work comes from taking the time to understand what a story is really about — and then finding the most cinematic way to tell it.</p>
+                </div>
+                <div class="story-divider"></div>
+                <div class="story-stat-row">
+                    <div class="story-stat">
+                        <div class="story-stat-number">5+</div>
+                        <div class="story-stat-label">Years Active</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">120+</div>
+                        <div class="story-stat-label">Projects</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">12</div>
+                        <div class="story-stat-label">Countries</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="values-section">
+        <div class="values-header">
+            <h2 class="values-title">How We<br><em>Work</em></h2>
+            <p class="values-intro">Four principles guide every project we take on — from a 30-second commercial to a feature-length documentary. They're not rules. They're the way we think.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-item">
+                <p class="value-number">01</p>
+                <h3 class="value-name">Story First,<br>Always</h3>
+                <p class="value-desc">Before we talk about cameras or locations or budgets, we ask: what is this story really about? The answer shapes every decision that follows.</p>
+            </div>
+            <div class="value-item">
+                <p class="value-number">02</p>
+                <h3 class="value-name">Craft Over<br>Convenience</h3>
+                <p class="value-desc">The easy choice is rarely the right choice. We push past the first idea, the obvious shot, the safe edit — because our clients deserve the best version, not the fastest one.</p>
+            </div>
+            <div class="value-item">
+                <p class="value-number">03</p>
+                <h3 class="value-name">Rooted in<br>Africa</h3>
+                <p class="value-desc">We bring an African perspective to every project — not as a niche, but as a strength. Our context, our eye, our network is an asset to every client we work with.</p>
+            </div>
+            <div class="value-item">
+                <p class="value-number">04</p>
+                <h3 class="value-name">Honest<br>Partnership</h3>
+                <p class="value-desc">We tell clients what we think, not what they want to hear. The best work comes from honest creative collaboration, and that only happens when trust goes both ways.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Band -->
+    <div class="parallax-band">
+        <div class="parallax-band-bg"></div>
+        <div class="parallax-band-text">
+            <p>Our Work</p>
+            <h2>"Every frame is a decision.<br>Every cut is a statement."</h2>
+        </div>
+    </div>
+
+    <!-- Clients -->
+    <section class="clients-section">
+        <p class="clients-label">Clients &amp; Collaborators</p>
+        <div class="clients-row">
+            <span class="client-name">Apple</span>
+            <span class="client-name">Nike</span>
+            <span class="client-name">Netflix</span>
+            <span class="client-name">Adidas</span>
+            <span class="client-name">Al Jazeera</span>
+            <span class="client-name">Spotify</span>
+            <span class="client-name">Tesla</span>
+            <span class="client-name">Vice Media</span>
+            <span class="client-name">WWF</span>
+            <span class="client-name">Kenya Tourism</span>
+            <span class="client-name">Safaricom</span>
+            <span class="client-name">Nation Media</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand">FOB<br>Media</div>
+                <p class="footer-tagline">Creating impact through film.<br>Nairobi, Kenya.</p>
+            </div>
+            <div>
+                <p class="footer-col-title">Navigation</p>
+                <ul class="footer-links">
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="ideas.html">Ideas</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="footer-col-title">Get In Touch</p>
+                <ul class="footer-links">
+                    <li><a href="/cdn-cgi/l/email-protection#a7cfc2cbcbc8e7c1c8c5cac2c3cec689c4c8ca"><span class="__cf_email__" data-cfemail="472f222b2b28072128252a22232e266924282a">[email&#160;protected]</span></a></li>
+                    <li><a href="tel:+254700000000">+254 700 000 000</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2025 FOB Media. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Vimeo</a>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursorRing');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Scroll fade-in
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.value-item, .story-stat, .client-name').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(24px)';
+            el.style.transition = `opacity 0.7s ${i * 0.07}s ease, transform 0.7s ${i * 0.07}s ease`;
+            observer.observe(el);
+        });
+
+        // Animated stat counters
+        function animateCounter(el, target, suffix = '') {
+            let start = 0;
+            const duration = 1200;
+            const step = timestamp => {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target) + suffix;
+                if (progress < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        }
+
+        const statObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const raw = el.dataset.count;
+                    const suffix = el.dataset.suffix || '';
+                    animateCounter(el, parseInt(raw), suffix);
+                    statObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.story-stat-number').forEach(el => {
+            const text = el.textContent.trim();
+        })
+     

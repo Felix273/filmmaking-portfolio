@@ -1,0 +1,21 @@
+.work-card {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+/* Fix for clickable work cards */
+.work-card {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}

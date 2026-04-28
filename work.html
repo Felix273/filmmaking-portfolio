@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work — FOB Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #f5f2ed;
+            --red: #c8102e;
+            --gray: #8a8580;
+            --light-gray: #e8e4dd;
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Cursor */
+        .cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+        .cursor-ring {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(245,242,237,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+        }
+        body:has(.work-card:hover) .cursor,
+        body:has(.featured-card:hover) .cursor { width: 64px; height: 64px; background: var(--red); }
+        body:has(.work-card:hover) .cursor-ring,
+        body:has(.featured-card:hover) .cursor-ring { opacity: 0; }
+
+        /* Nav */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 28px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { opacity: 0.4; }
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 180px 48px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: end;
+            border-bottom: 1px solid rgba(245,242,237,0.1);
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: clamp(64px, 9vw, 120px);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            color: var(--white);
+        }
+
+        .page-title em {
+            font-style: italic;
+            display: block;
+            color: var(--gray);
+        }
+
+        .page-intro {
+            max-width: 420px;
+        }
+
+        .page-intro p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .project-count {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            padding: 24px 48px;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            border-bottom: 1px solid rgba(245,242,237,0.08);
+            overflow-x: auto;
+        }
+
+        .filter-btn {
+            background: none;
+            border: 1px solid rgba(245,242,237,0.15);
+            color: var(--gray);
+            padding: 8px 20px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--white);
+            border-color: var(--white);
+            color: var(--black);
+        }
+
+        /* Work List — editorial row layout */
+        .work-list {
+            padding: 0 48px;
+        }
+
+        .work-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 200px 160px 80px;
+            gap: 24px;
+            align-items: center;
+            padding: 28px 0;
+            border-bottom: 1px solid rgba(245,242,237,0.08);
+            cursor: none;
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-row:hover { background: rgba(245,242,237,0.03); }
+
+        .work-row-num {
+            font-size: 11px;
+            color: var(--gray);
+            letter-spacing: 1px;
+        }
+
+        .work-row-title {
+            font-family: var(--font-serif);
+            font-size: clamp(20px, 2.5vw, 32px);
+            font-weight: 700;
+            color: var(--white);
+            transition: transform 0.4s ease;
+        }
+
+        .work-row:hover .work-row-title {
+            transform: translateX(12px);
+        }
+
+        .work-row-client {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .work-row-type {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .work-row-arrow {
+            font-size: 18px;
+            color: var(--gray);
+            text-align: right;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .work-row:hover .work-row-arrow {
+            color: var(--white);
+            transform: translateX(4px);
+        }
+
+        /* Hover image preview */
+        .work-row-preview {
+            position: fixed;
+            width: 280px;
+            height: 180px;
+            pointer-events: none;
+            z-index: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+            overflow: hidden;
+        }
+
+        .work-row-preview img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+        }
+
+        .work-row:hover ~ .work-row-preview,
+        .work-row-preview.active { opacity: 1; }
+
+        /* Grid Section */
+        .grid-section {
+            padding: 120px 48px;
+            border-top: 1px solid rgba(245,242,237,0.08);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 3px;
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            cursor: none;
+        }
+
+        .work-card:nth-child(1) { grid-column: span 8; aspect-ratio: 16/9; }
+        .work-card:nth-child(2) { grid-column: span 4; aspect-ratio: 4/5; }
+        .work-card:nth-child(3) { grid-column: span 4; aspect-ratio: 1; }
+        .work-card:nth-child(4) { grid-column: span 4; aspect-ratio: 1; }
+        .work-card:nth-child(5) { grid-column: span 4; aspect-ratio: 1; }
+        .work-card:nth-child(6) { grid-column: span 6; aspect-ratio: 3/2; }
+        .work-card:nth-child(7) { grid-column: span 6; aspect-ratio: 3/2; }
+
+        .work-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.05);
+            transition: transform 0.9s cubic-bezier(0.4,0,0.2,1), filter 0.5s;
+        }
+
+        .work-card:hover img {
+            transform: scale(1.06);
+            filter: grayscale(0%) contrast(1.1);
+        }
+
+        .work-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,10,0.88) 0%, transparent 55%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px;
+        }
+
+        .work-card:hover .work-overlay { opacity: 1; }
+
+        .work-client {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 6px;
+        }
+
+        .work-title {
+            font-family: var(--font-serif);
+            font-size: clamp(16px, 2vw, 26px);
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(245,242,237,0.1);
+            padding: 80px 48px 48px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline { font-size: 12px; color: var(--gray); line-height: 1.7; }
+
+        .footer-col-title {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+        .footer-links a {
+            color: rgba(245,242,237,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(245,242,237,0.08);
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy { font-size: 11px; color: var(--gray); }
+
+        .footer-social { display: flex; gap: 32px; }
+
+        .footer-social a {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover { color: var(--white); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-header { grid-template-columns: 1fr; gap: 40px; }
+            .work-row { grid-template-columns: 40px 1fr 120px 40px; }
+            .work-row-type { display: none; }
+            .mosaic-grid { grid-template-columns: repeat(6, 1fr); }
+            .work-card:nth-child(1) { grid-column: span 6; }
+            .work-card:nth-child(2) { grid-column: span 3; }
+            .work-card:nth-child(3),
+            .work-card:nth-child(4),
+            .work-card:nth-child(5) { grid-column: span 2; }
+            .work-card:nth-child(6),
+            .work-card:nth-child(7) { grid-column: span 3; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav { padding: 20px 24px; }
+            .nav-links { gap: 20px; }
+            .page-header { padding: 140px 24px 60px; }
+            .filter-bar { padding: 16px 24px; }
+            .work-list { padding: 0 24px; }
+            .work-row { grid-template-columns: 32px 1fr 32px; gap: 16px; }
+            .work-row-client, .work-row-type { display: none; }
+            .grid-section { padding: 60px 24px; }
+            .mosaic-grid { grid-template-columns: 1fr; }
+            .work-card:nth-child(n) { grid-column: span 1; aspect-ratio: 16/9; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <script src="js/data.js"></script>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="work-row-preview" id="hoverPreview">
+        <img id="hoverPreviewImg" src="" alt="">
+    </div>
+
+    <!-- Nav -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="work.html" class="active">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            
+        </ul>
+        <a href="index.html" class="nav-logo">FOB Media</a>
+        <ul class="nav-links">
+            <li><a href="ideas.html">Ideas</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1 class="page-title">Selected<br><em>Work</em></h1>
+        <div class="page-intro">
+            <p>Every project begins with a question: what do we want the audience to feel? From that answer, we build everything — frame by frame, cut by cut.</p>
+            <p class="project-count">24 Projects · 2020–2025</p>
+        </div>
+    </header>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="feature">Feature Films</button>
+        <button class="filter-btn" data-filter="documentary">Documentary</button>
+        <button class="filter-btn" data-filter="commercial">Commercials</button>
+        <button class="filter-btn" data-filter="music">Music Videos</button>
+        <button class="filter-btn" data-filter="brand">Brand Films</button>
+    </div>
+
+    <!-- Work List (editorial rows) -->
+    <div class="work-list" id="workList"></div>
+
+    <!-- Mosaic Grid -->
+    <section class="grid-section">
+        <div class="section-header">
+            <span class="section-label">Featured Projects</span>
+            <span class="section-label">Visual Archive</span>
+        </div>
+        <div class="mosaic-grid" id="mosaicGrid"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand">FOB<br>Media</div>
+                <p class="footer-tagline">Creating impact through film.<br>Nairobi, Kenya.</p>
+            </div>
+            <div>
+                <p class="footer-col-title">Navigation</p>
+                <ul class="footer-links">
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="ideas.html">Ideas</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="footer-col-title">Get In Touch</p>
+                <ul class="footer-links">
+                    <li><a href="/cdn-cgi/l/email-protection#771f121b1b18371118151a12131e165914181a"><span class="__cf_email__" data-cfemail="cba3aea7a7a48bada4a9a6aeafa2aae5a8a4a6">[email&#160;protected]</span></a></li>
+                    <li><a href="tel:+254700000000">+254 700 000 000</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2025 FOB Media. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Vimeo</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        FOBData.initCursor();
+
+        // Hover preview
+        const preview = document.getElementById('hoverPreview');
+        const previewImg = document.getElementById('hoverPreviewImg');
+        document.addEventListener('mousemove', e => {
+            preview.style.left = (e.clientX + 24) + 'px';
+            preview.style.top = (e.clientY - 90) + 'px';
+        });
+
+        function attachRowHover() {
+            document.querySelectorAll('.work-row').forEach(row => {
+                row.addEventListener('mouseenter', () => { previewImg.src = row.dataset.image; preview.classList.add('active'); });
+                row.addEventListener('mouseleave', () => preview.classList.remove('active'));
+            });
+        }
+
+        function renderList(filter) {
+            document.getElementById('workList').innerHTML =
+                FOBData.getProjects(filter).map((p, i) => FOBData.renderWorkRow(p, i)).join('');
+            attachRowHover();
+        }
+
+        FOBData.load().then(() => {
+            // List with all projects
+            renderList('all');
+
+            // Mosaic — featured projects
+            document.getElementById('mosaicGrid').innerHTML =
+                FOBData.getFeaturedProjects().map(p => FOBData.renderMosaicCard(p)).join('');
+
+            FOBData.observeFadeIn('.work-card');
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderList(btn.dataset.filter);
+                });
+            });
+        });
+
+        // Scroll fade-in (kept for mosaic cards)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.work-card').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.7s ${i * 0.08}s ease, transform 0.7s ${i * 0.08}s ease`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
