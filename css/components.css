@@ -1,21 +1,39 @@
-.work-card {
-    position: relative;
-    aspect-ratio: 16/10;
-    overflow: hidden;
-    cursor: pointer;
-    background: #000;
+/**
+ * BOLD UNITY CREATIVE — Shared Component Styles
+ * Supplements the inline styles on each page.
+ * Mainly handles the work card anchor tag fix
+ * now that cards link to project-detail.html.
+ */
+
+/* ── Work Cards (index.html, work.html) ── */
+/* Cards are now <a> tags — reset link defaults */
+a.work-card,
+a.featured-card {
     display: block;
     text-decoration: none;
     color: inherit;
 }
-/* Fix for clickable work cards */
-.work-card {
-    position: relative;
-    aspect-ratio: 16/10;
-    overflow: hidden;
-    cursor: pointer;
-    background: #000;
-    display: block;
+
+/* Row links on work.html list view */
+a.work-row {
+    display: grid;
     text-decoration: none;
     color: inherit;
+}
+
+/* Member / team links */
+a.member-link,
+a.list-article,
+a.article-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Ensure cursor:none propagates to all interactive cards */
+a.work-card,
+a.featured-card,
+a.work-row,
+a.article-card,
+a.list-article {
+    cursor: none;
 }

@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ideas — FOB Media</title>
+    <title>Careers — BOLD UNITY CREATIVE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -47,10 +49,8 @@
             transform: translate(-50%, -50%);
             transition: all 0.15s ease;
         }
-        body:has(.article-card:hover) .cursor { width: 56px; height: 56px; background: var(--red); }
-        body:has(.article-card:hover) .cursor-ring { opacity: 0; }
-        body:has(.hero-article:hover) .cursor { width: 64px; height: 64px; background: var(--red); }
-        body:has(.hero-article:hover) .cursor-ring { opacity: 0; }
+        body:has(.role-card:hover) .cursor { width: 56px; height: 56px; background: var(--red); }
+        body:has(.role-card:hover) .cursor-ring { opacity: 0; }
 
         /* Nav */
         .main-nav {
@@ -83,49 +83,74 @@
 
         /* ── PAGE HEADER ── */
         .page-header {
-            padding: 160px 48px 64px;
-            border-bottom: 1px solid rgba(245,242,237,0.1);
+            padding: 180px 48px 100px;
+            border-bottom: 1px solid rgba(245,242,237,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1800&h=900&fit=crop&q=80');
+            background-size: cover;
+            background-position: center 40%;
+            filter: grayscale(60%) brightness(0.12);
+            pointer-events: none;
+        }
+
+        .page-header-inner {
+            position: relative;
+            z-index: 2;
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
             align-items: end;
-            gap: 48px;
         }
 
-        .page-title {
-            font-family: var(--font-serif);
-            font-size: clamp(72px, 10vw, 130px);
-            font-weight: 900;
-            line-height: 0.9;
-            letter-spacing: -3px;
-            opacity: 0;
-            animation: fadeUp 0.9s 0.4s ease forwards;
-        }
-
-        .page-title em {
-            font-style: italic;
-            color: var(--gray);
-        }
-
-        .page-header-right {
-            opacity: 0;
-            animation: fadeUp 0.8s 0.65s ease forwards;
-            text-align: right;
-        }
-
-        .page-header-right p {
-            font-size: 13px;
-            line-height: 1.8;
-            color: var(--gray);
-            max-width: 300px;
-            margin-left: auto;
-        }
-
-        .issue-label {
+        .page-eyebrow {
             font-size: 10px;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--red);
-            margin-bottom: 16px;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s ease forwards;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: clamp(64px, 9vw, 120px);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -2px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.55s ease forwards;
+        }
+
+        .page-title em {
+            font-style: italic;
+            display: block;
+            color: var(--gray);
+        }
+
+        .page-right {
+            opacity: 0;
+            animation: fadeUp 0.8s 0.75s ease forwards;
+        }
+
+        .page-right p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: rgba(245,242,237,0.6);
+            margin-bottom: 24px;
+        }
+
+        .open-count {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--red);
         }
 
         @keyframes fadeUp {
@@ -133,146 +158,51 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── CATEGORY FILTER ── */
-        .filter-bar {
-            padding: 20px 48px;
-            display: flex;
-            gap: 4px;
-            border-bottom: 1px solid rgba(245,242,237,0.08);
-            overflow-x: auto;
-        }
-
-        .filter-btn {
-            background: none;
-            border: 1px solid rgba(245,242,237,0.15);
-            color: var(--gray);
-            padding: 8px 20px;
-            font-family: var(--font-sans);
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: none;
-            transition: all 0.25s;
-            white-space: nowrap;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--white);
-            border-color: var(--white);
-            color: var(--black);
-        }
-
-        /* ── HERO ARTICLE ── */
-        .hero-article {
-            position: relative;
-            height: 75vh;
-            overflow: hidden;
-            cursor: none;
-            display: block;
-            text-decoration: none;
-        }
-
-        .hero-article-bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(20%) brightness(0.55) contrast(1.1);
-            transition: transform 0.9s cubic-bezier(0.4,0,0.2,1), filter 0.5s;
-        }
-
-        .hero-article:hover .hero-article-bg {
-            transform: scale(1.04);
-            filter: grayscale(0%) brightness(0.5) contrast(1.1);
-        }
-
-        .hero-article-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top,
-                rgba(10,10,10,0.95) 0%,
-                rgba(10,10,10,0.4) 50%,
-                rgba(10,10,10,0.1) 100%);
-        }
-
-        .hero-article-content {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 64px 48px;
+        /* ── CULTURE BAND ── */
+        .culture-band {
             display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 48px;
-            align-items: end;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(245,242,237,0.06);
         }
 
-        .hero-article-meta {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-bottom: 20px;
+        .culture-item {
+            background: var(--black);
+            padding: 56px 48px;
+            transition: background 0.4s;
         }
 
-        .article-category {
-            font-size: 9px;
+        .culture-item:hover { background: #0d0d0d; }
+
+        .culture-icon {
+            font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--red);
-            background: rgba(200,16,46,0.15);
-            padding: 5px 12px;
-            border: 1px solid rgba(200,16,46,0.3);
+            margin-bottom: 28px;
         }
 
-        .article-date {
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: rgba(245,242,237,0.4);
-            text-transform: uppercase;
-        }
-
-        .hero-article-title {
+        .culture-heading {
             font-family: var(--font-serif);
-            font-size: clamp(32px, 4.5vw, 60px);
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -1px;
+            font-size: 24px;
+            font-weight: 700;
             color: var(--white);
-            max-width: 700px;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
 
-        .hero-article-title em { font-style: italic; color: rgba(245,242,237,0.75); }
-
-        .hero-article-right { text-align: right; }
-
-        .hero-article-excerpt {
-            font-size: 14px;
-            line-height: 1.75;
-            color: rgba(245,242,237,0.6);
-            max-width: 280px;
-            margin-left: auto;
-            margin-bottom: 24px;
+        .culture-body {
+            font-size: 13px;
+            line-height: 1.85;
+            color: var(--gray);
         }
 
-        .hero-article-read {
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--white);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid rgba(245,242,237,0.3);
-            padding-bottom: 3px;
-            transition: gap 0.3s, border-color 0.3s;
+        /* ── OPEN ROLES ── */
+        .roles-section {
+            padding: 120px 48px 0;
         }
 
-        .hero-article:hover .hero-article-read { gap: 18px; border-color: var(--white); }
-
-        /* ── ARTICLE GRID ── */
-        .articles-section {
-            padding: 80px 48px 140px;
-        }
-
-        .section-header {
+        .roles-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
@@ -288,228 +218,92 @@
             color: var(--gray);
         }
 
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 3px;
-            margin-bottom: 3px;
+        .roles-dept {
+            margin-bottom: 72px;
         }
 
-        /* First row: large + small stack */
-        .article-card {
-            position: relative;
-            background: #0f0f0f;
-            overflow: hidden;
-            cursor: none;
-            text-decoration: none;
-            display: block;
-        }
-
-        .article-card:nth-child(1) { grid-column: span 7; }
-        .article-card:nth-child(2) { grid-column: span 5; }
-        .article-card:nth-child(3),
-        .article-card:nth-child(4),
-        .article-card:nth-child(5) { grid-column: span 4; }
-
-        .article-card-image {
-            width: 100%;
-            aspect-ratio: 16/10;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .article-card:nth-child(1) .article-card-image { aspect-ratio: 16/10; }
-        .article-card:nth-child(2) .article-card-image { aspect-ratio: 4/3; }
-
-        .article-card-image img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            filter: grayscale(20%) contrast(1.05);
-            transition: transform 0.9s cubic-bezier(0.4,0,0.2,1), filter 0.5s;
-        }
-
-        .article-card:hover .article-card-image img {
-            transform: scale(1.06);
-            filter: grayscale(0%);
-        }
-
-        .article-card-body {
-            padding: 28px 32px 36px;
-            border-top: 1px solid rgba(245,242,237,0.06);
-        }
-
-        .article-card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .article-card-category {
+        .dept-label {
             font-size: 9px;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--red);
-        }
-
-        .article-card-date {
-            font-size: 10px;
             color: var(--gray);
-            letter-spacing: 1px;
-        }
-
-        .article-card-title {
-            font-family: var(--font-serif);
-            font-size: clamp(18px, 2vw, 26px);
-            font-weight: 700;
-            line-height: 1.2;
-            color: var(--white);
-            margin-bottom: 12px;
-            transition: color 0.3s;
-        }
-
-        .article-card:hover .article-card-title { color: rgba(245,242,237,0.75); }
-
-        .article-card-excerpt {
-            font-size: 13px;
-            line-height: 1.75;
-            color: var(--gray);
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .article-card-author {
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(245,242,237,0.06);
+            gap: 16px;
         }
 
-        .author-avatar {
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            filter: grayscale(30%);
+        .dept-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(245,242,237,0.08);
         }
 
-        .author-name {
-            font-size: 11px;
-            color: rgba(245,242,237,0.5);
-            letter-spacing: 0.5px;
-        }
-
-        .author-read-time {
-            font-size: 10px;
-            color: var(--gray);
-            margin-left: auto;
-            letter-spacing: 1px;
-        }
-
-        /* ── LIST ARTICLES ── */
-        .articles-list {
-            margin-top: 3px;
-        }
-
-        .list-article {
+        .role-card {
             display: grid;
-            grid-template-columns: 200px 1fr auto;
-            gap: 32px;
+            grid-template-columns: 1fr 180px 160px 64px;
+            gap: 24px;
             align-items: center;
             padding: 28px 0;
-            border-bottom: 1px solid rgba(245,242,237,0.08);
+            border-bottom: 1px solid rgba(245,242,237,0.07);
             text-decoration: none;
             cursor: none;
             transition: background 0.3s;
         }
 
-        .list-article:hover { background: rgba(245,242,237,0.02); }
+        .role-card:hover { background: rgba(245,242,237,0.025); }
 
-        .list-article-thumb {
-            width: 200px;
-            height: 120px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .list-article-thumb img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            filter: grayscale(25%);
-            transition: transform 0.6s ease, filter 0.4s;
-        }
-
-        .list-article:hover .list-article-thumb img {
-            transform: scale(1.06);
-            filter: grayscale(0%);
-        }
-
-        .list-article-body {}
-
-        .list-article-category {
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 10px;
-        }
-
-        .list-article-title {
+        .role-title {
             font-family: var(--font-serif);
-            font-size: clamp(18px, 2vw, 24px);
+            font-size: clamp(18px, 2vw, 26px);
             font-weight: 700;
             color: var(--white);
-            line-height: 1.2;
-            margin-bottom: 10px;
-            transition: transform 0.3s;
+            transition: transform 0.4s;
         }
 
-        .list-article:hover .list-article-title { transform: translateX(8px); }
+        .role-card:hover .role-title { transform: translateX(10px); }
 
-        .list-article-excerpt {
-            font-size: 13px;
-            line-height: 1.7;
-            color: var(--gray);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .list-article-right {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .list-article-date {
-            font-size: 10px;
+        .role-location {
+            font-size: 11px;
             letter-spacing: 1.5px;
             color: var(--gray);
             text-transform: uppercase;
-            display: block;
-            margin-bottom: 8px;
         }
 
-        .list-article-arrow {
-            font-size: 16px;
+        .role-type {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .role-arrow {
+            font-size: 18px;
             color: var(--gray);
+            text-align: right;
             transition: color 0.3s, transform 0.3s;
-            display: block;
         }
 
-        .list-article:hover .list-article-arrow { color: var(--white); transform: translateX(4px); }
+        .role-card:hover .role-arrow { color: var(--white); transform: translateX(4px); }
 
-        /* ── NEWSLETTER ── */
-        .newsletter-section {
-            background: var(--white);
+        /* No roles state */
+        .no-roles {
+            padding: 48px 0;
+            font-size: 14px;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* ── SPECULATIVE CTA ── */
+        .spec-section {
             padding: 120px 48px;
+            background: var(--white);
+            margin-top: 80px;
         }
 
-        .newsletter-inner {
-            max-width: 1000px;
+        .spec-inner {
+            max-width: 1100px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -517,7 +311,7 @@
             align-items: center;
         }
 
-        .newsletter-heading {
+        .spec-heading {
             font-family: var(--font-serif);
             font-size: clamp(36px, 4.5vw, 60px);
             font-weight: 900;
@@ -526,49 +320,146 @@
             color: var(--black);
         }
 
-        .newsletter-heading em { font-style: italic; color: #aaa; }
+        .spec-heading em { font-style: italic; color: #aaa; }
 
-        .newsletter-body p {
+        .spec-body p {
             font-size: 14px;
-            line-height: 1.8;
-            color: #666;
-            margin-bottom: 32px;
+            line-height: 1.85;
+            color: #555;
+            margin-bottom: 24px;
         }
 
-        .newsletter-form {
+        .spec-form {
             display: flex;
+            flex-direction: column;
             gap: 0;
-            border-bottom: 2px solid var(--black);
         }
 
-        .newsletter-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            font-family: var(--font-sans);
-            font-size: 14px;
-            color: var(--black);
-            padding: 14px 0;
-            outline: none;
-            cursor: none;
+        .spec-field {
+            position: relative;
+            margin-bottom: 28px;
         }
 
-        .newsletter-input::placeholder { color: #aaa; }
-
-        .newsletter-submit {
-            background: transparent;
-            border: none;
-            font-family: var(--font-sans);
-            font-size: 10px;
+        .spec-field label {
+            display: block;
+            font-size: 9px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--black);
-            cursor: none;
-            padding: 14px 0 14px 24px;
+            color: #999;
+            margin-bottom: 10px;
             transition: color 0.3s;
         }
 
-        .newsletter-submit:hover { color: var(--red); }
+        .spec-field:focus-within label { color: var(--black); }
+
+        .spec-field input,
+        .spec-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            color: var(--black);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            padding: 10px 0;
+            outline: none;
+            cursor: none;
+            transition: border-color 0.3s;
+            -webkit-appearance: none;
+        }
+
+        .spec-field select option { background: var(--white); }
+
+        .spec-field input:focus,
+        .spec-field select:focus { border-bottom-color: var(--black); }
+
+        .spec-field::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--red);
+            transition: width 0.4s ease;
+        }
+
+        .spec-field:focus-within::after { width: 100%; }
+
+        .spec-submit {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 18px 48px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s;
+            align-self: flex-start;
+            margin-top: 8px;
+        }
+
+        .spec-submit::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--red);
+            transform: translateX(-101%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .spec-submit:hover::after { transform: translateX(0); }
+        .spec-submit span { position: relative; z-index: 1; }
+
+        /* ── PERKS ── */
+        .perks-section {
+            padding: 120px 48px;
+        }
+
+        .perks-label {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 64px;
+        }
+
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(245,242,237,0.06);
+        }
+
+        .perk-item {
+            background: var(--black);
+            padding: 48px 36px;
+        }
+
+        .perk-number {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--red);
+            margin-bottom: 20px;
+        }
+
+        .perk-name {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .perk-desc {
+            font-size: 12px;
+            line-height: 1.85;
+            color: var(--gray);
+        }
 
         /* ── FOOTER ── */
         footer {
@@ -627,37 +518,27 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .page-header { grid-template-columns: 1fr; }
-            .page-header-right { text-align: left; }
-            .page-header-right p { margin-left: 0; }
-            .hero-article-content { grid-template-columns: 1fr; }
-            .hero-article-right { text-align: left; }
-            .hero-article-excerpt { margin-left: 0; }
-            .articles-grid { grid-template-columns: repeat(6, 1fr); }
-            .article-card:nth-child(1) { grid-column: span 6; }
-            .article-card:nth-child(2) { grid-column: span 6; }
-            .article-card:nth-child(3),
-            .article-card:nth-child(4),
-            .article-card:nth-child(5) { grid-column: span 3; }
-            .list-article { grid-template-columns: 140px 1fr; }
-            .list-article-right { display: none; }
-            .newsletter-inner { grid-template-columns: 1fr; gap: 40px; }
+            .page-header-inner { grid-template-columns: 1fr; gap: 40px; }
+            .culture-band { grid-template-columns: 1fr 1fr; }
+            .role-card { grid-template-columns: 1fr 120px 40px; }
+            .role-type { display: none; }
+            .spec-inner { grid-template-columns: 1fr; gap: 48px; }
+            .perks-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
         }
 
         @media (max-width: 768px) {
             .main-nav { padding: 20px 24px; }
             .nav-links { gap: 20px; }
-            .page-header { padding: 140px 24px 48px; }
-            .filter-bar { padding: 16px 24px; }
-            .hero-article-content { padding: 40px 24px; }
-            .articles-section { padding: 60px 24px 80px; }
-            .articles-grid { grid-template-columns: 1fr; }
-            .article-card:nth-child(n) { grid-column: span 1; }
-            .list-article { grid-template-columns: 100px 1fr; gap: 16px; }
-            .list-article-thumb { width: 100px; height: 80px; }
-            .newsletter-section { padding: 80px 24px; }
-            .footer-top { grid-template-columns: 1fr; }
+            .page-header { padding: 140px 24px 60px; }
+            .culture-band { grid-template-columns: 1fr; }
+            .roles-section { padding: 80px 24px 0; }
+            .role-card { grid-template-columns: 1fr 32px; gap: 12px; }
+            .role-location { display: none; }
+            .spec-section { padding: 80px 24px; }
+            .perks-section { padding: 80px 24px; }
+            .perks-grid { grid-template-columns: 1fr 1fr; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
             .footer-bottom { flex-direction: column; gap: 20px; }
         }
     </style>
@@ -674,73 +555,160 @@
             <li><a href="about.html">About</a></li>
             <li><a href="team.html">Team</a></li>
         </ul>
-        <a href="index.html" class="nav-logo">FOB Media</a>
+        <a href="index.html" class="nav-logo">BOLD UNITY CREATIVE</a>
         <ul class="nav-links">
-            <li><a href="ideas.html" class="active">Ideas</a></li>
+            <li><a href="ideas.html">Ideas</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 
     <!-- Header -->
     <header class="page-header">
-        <h1 class="page-title">Ideas &<br><em>Thinking</em></h1>
-        <div class="page-header-right">
-            <p class="issue-label">Volume 01 · 2025</p>
-            <p>Essays, dispatches, and thinking from the FOB Media team — on filmmaking, storytelling, and the business of visual culture.</p>
+        <div class="page-header-bg"></div>
+        <div class="page-header-inner">
+            <div>
+                <p class="page-eyebrow">Join the Team</p>
+                <h1 class="page-title">Work<br>With <em>Us.</em></h1>
+            </div>
+            <div class="page-right">
+                <p>We're a small team that does big work. Everyone here is deeply invested in the craft — and in each other. If you're obsessed with filmmaking and want to build something meaningful in African cinema, we should talk.</p>
+                <p class="open-count" id="openCount">4 Open Roles · Nairobi, Kenya</p>
+            </div>
         </div>
     </header>
 
-    <!-- Filter -->
-    <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="craft">Craft</button>
-        <button class="filter-btn" data-filter="industry">Industry</button>
-        <button class="filter-btn" data-filter="africa">Africa</button>
-        <button class="filter-btn" data-filter="process">Process</button>
-        <button class="filter-btn" data-filter="interview">Interview</button>
+    <!-- Culture -->
+    <div class="culture-band">
+        <div class="culture-item">
+            <p class="culture-icon">01 — Craft</p>
+            <h3 class="culture-heading">We take the work seriously. Not ourselves.</h3>
+            <p class="culture-body">High standards, low ego. We debate creative decisions fiercely and then move forward together. Nobody's too senior to learn and nobody's too junior to have a great idea.</p>
+        </div>
+        <div class="culture-item">
+            <p class="culture-icon">02 — Autonomy</p>
+            <h3 class="culture-heading">You're trusted to lead your domain.</h3>
+            <p class="culture-body">We hire people who know what they're doing and then let them do it. No micromanagement. No permission structures for every small decision. Ownership is real here.</p>
+        </div>
+        <div class="culture-item">
+            <p class="culture-icon">03 — Rootedness</p>
+            <h3 class="culture-heading">African perspective is our competitive advantage.</h3>
+            <p class="culture-body">We're not a local outpost of a global agency. We're a Nairobi-born company telling African stories to the world. That context shapes how we work and what we make.</p>
+        </div>
     </div>
 
-    <!-- Hero Article -->
-    <a href="#" class="hero-article">
-        <div class="hero-article-bg" style="background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1800&h=900&fit=crop&q=80')"></div>
-        <div class="hero-article-overlay"></div>
-        <div class="hero-article-content">
-            <div>
-                <div class="hero-article-meta">
-                    <span class="article-category">Craft</span>
-                    <span class="article-date">March 2025</span>
-                </div>
-                <h2 class="hero-article-title">Why African Cinema Is the Most <em>Exciting</em> Film Movement in the World Right Now</h2>
-            </div>
-            <div class="hero-article-right">
-                <p class="hero-article-excerpt">A generational shift is underway. Here's why the next decade of world cinema will be defined by voices from the continent.</p>
-                <span class="hero-article-read">Read Essay →</span>
-            </div>
-        </div>
-    </a>
-
-    <!-- Article Grid -->
-    <section class="articles-section">
-        <div class="section-header">
-            <span class="section-label">Latest</span>
-            <span class="section-label" id="article-count">12 Articles</span>
+    <!-- Roles -->
+    <section class="roles-section">
+        <div class="roles-header">
+            <span class="section-label">Open Positions</span>
+            <span class="section-label" id="rolesCount">4 Roles</span>
         </div>
 
-        <div class="articles-grid" id="articlesGrid"></div>
-        <div class="articles-list" id="articlesList"></div>
+        <!-- Production -->
+        <div class="roles-dept">
+            <p class="dept-label">Production</p>
+
+            <a href="mailto:hello@boldunitycreative.com?subject=Application: Director of Photography" class="role-card">
+                <span class="role-title">Director of Photography</span>
+                <span class="role-location">Nairobi, Kenya</span>
+                <span class="role-type">Full-time</span>
+                <span class="role-arrow">→</span>
+            </a>
+
+            <a href="mailto:hello@boldunitycreative.com?subject=Application: Production Coordinator" class="role-card">
+                <span class="role-title">Production Coordinator</span>
+                <span class="role-location">Nairobi, Kenya</span>
+                <span class="role-type">Full-time</span>
+                <span class="role-arrow">→</span>
+            </a>
+        </div>
+
+        <!-- Post Production -->
+        <div class="roles-dept">
+            <p class="dept-label">Post Production</p>
+
+            <a href="mailto:hello@boldunitycreative.com?subject=Application: Senior Editor" class="role-card">
+                <span class="role-title">Senior Editor</span>
+                <span class="role-location">Nairobi, Kenya</span>
+                <span class="role-type">Full-time</span>
+                <span class="role-arrow">→</span>
+            </a>
+
+            <a href="mailto:hello@boldunitycreative.com?subject=Application: Motion Designer" class="role-card">
+                <span class="role-title">Motion Designer</span>
+                <span class="role-location">Remote / Hybrid</span>
+                <span class="role-type">Contract</span>
+                <span class="role-arrow">→</span>
+            </a>
+        </div>
     </section>
 
-    <!-- Newsletter -->
-    <section class="newsletter-section">
-        <div class="newsletter-inner">
-            <h2 class="newsletter-heading">Ideas in<br>your<br><em>inbox.</em></h2>
-            <div class="newsletter-body">
-                <p>Every few weeks we send out a newsletter — new essays, what we're watching, what's moving us, and occasional notes from the edit suite.</p>
-                <p>No algorithms. No ads. Just thinking.</p>
-                <div class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="your@email.com">
-                    <button class="newsletter-submit">Subscribe →</button>
+    <!-- Perks -->
+    <section class="perks-section">
+        <p class="perks-label">What We Offer</p>
+        <div class="perks-grid">
+            <div class="perk-item">
+                <p class="perk-number">01</p>
+                <h3 class="perk-name">Competitive Salary</h3>
+                <p class="perk-desc">Top-of-market compensation benchmarked against the best production houses in East Africa.</p>
+            </div>
+            <div class="perk-item">
+                <p class="perk-number">02</p>
+                <h3 class="perk-name">Equipment Access</h3>
+                <p class="perk-desc">Full access to our production kit — cinema cameras, lenses, grip, lighting — for personal projects outside work hours.</p>
+            </div>
+            <div class="perk-item">
+                <p class="perk-number">03</p>
+                <h3 class="perk-name">Creative Sabbatical</h3>
+                <p class="perk-desc">After 2 years, a fully paid 4-week sabbatical to pursue any creative project of your choosing. No strings attached.</p>
+            </div>
+            <div class="perk-item">
+                <p class="perk-number">04</p>
+                <h3 class="perk-name">Festival Access</h3>
+                <p class="perk-desc">Funded attendance at one international film festival per year — ZIFF, TIFF, Cannes, or your choice.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speculative Application -->
+    <section class="spec-section">
+        <div class="spec-inner">
+            <h2 class="spec-heading">Don't see<br>your <em>role?</em></h2>
+            <div class="spec-body">
+                <p>We're always interested in exceptional people, even when we're not actively hiring. If you're a filmmaker, editor, sound designer, producer, or strategist who believes in what we're building — send us your work.</p>
+                <p>We review every speculative application and we keep them on file. Many of our team members came to us this way.</p>
+                <div class="spec-form" id="specForm">
+                    <div class="spec-field">
+                        <label for="specName">Your Name</label>
+                        <input type="text" id="specName" placeholder="James Odhiambo">
+                    </div>
+                    <div class="spec-field">
+                        <label for="specEmail">Email</label>
+                        <input type="email" id="specEmail" placeholder="james@studio.com">
+                    </div>
+                    <div class="spec-field">
+                        <label for="specRole">I work in</label>
+                        <select id="specRole">
+                            <option value="" disabled selected>Select discipline</option>
+                            <option>Directing</option>
+                            <option>Cinematography</option>
+                            <option>Editing</option>
+                            <option>Sound Design</option>
+                            <option>Producing</option>
+                            <option>Art Direction</option>
+                            <option>Motion Design</option>
+                            <option>Scriptwriting</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="spec-field">
+                        <label for="specReel">Portfolio / Reel URL</label>
+                        <input type="url" id="specReel" placeholder="https://vimeo.com/yourname">
+                    </div>
+                    <button class="spec-submit" id="specSubmit"><span>Send Application →</span></button>
                 </div>
+                <p id="specSuccess" style="display:none; font-size:14px; color:#555; line-height:1.7;">
+                    ✓ &nbsp;Got it — we'll be in touch if there's a fit. Thanks for reaching out.
+                </p>
             </div>
         </div>
     </section>
@@ -765,13 +733,13 @@
             <div>
                 <p class="footer-col-title">Get In Touch</p>
                 <ul class="footer-links">
-                    <li><a href="mailto:hello@fobmedia.com">hello@fobmedia.com</a></li>
+                    <li><a href="mailto:hello@boldunitycreative.com">hello@boldunitycreative.com</a></li>
                     <li><a href="tel:+254700000000">+254 700 000 000</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="footer-copy">© 2025 FOB Media. All rights reserved.</p>
+            <p class="footer-copy">© 2025 BOLD UNITY CREATIVE. All rights reserved.</p>
             <div class="footer-social">
                 <a href="#">Instagram</a>
                 <a href="#">LinkedIn</a>
@@ -799,172 +767,35 @@
         }
         animateRing();
 
-        // Articles data
-        const articles = [
-            {
-                category: 'craft', tag: 'Craft',
-                title: 'The Grammar of Light: How Cinematography Shapes Emotional Truth',
-                excerpt: 'Light is never neutral. Every choice — hard or soft, warm or cold, directional or diffuse — is an argument about how the world feels.',
-                date: 'Feb 2025', readTime: '8 min read',
-                image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=500&fit=crop&q=80',
-                author: 'David Kimani', authorImg: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop'
-            },
-            {
-                category: 'industry', tag: 'Industry',
-                title: 'Brand Films vs. Advertising: Why the Distinction Matters More Than Ever',
-                excerpt: 'As audiences grow more resistant to traditional ads, the brand film has become the most powerful tool in a marketer\'s arsenal — if done right.',
-                date: 'Jan 2025', readTime: '6 min read',
-                image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&h=500&fit=crop&q=80',
-                author: 'Amina Wanjiku', authorImg: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&fit=crop'
-            },
-            {
-                category: 'process', tag: 'Process',
-                title: 'On Pre-Production: The 90% of Filmmaking Nobody Talks About',
-                excerpt: 'The best work is made before the camera rolls. A breakdown of how we approach prep on every project, from brief to shoot day.',
-                date: 'Jan 2025', readTime: '10 min read',
-                image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=500&fit=crop&q=80',
-                author: 'James Odhiambo', authorImg: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop'
-            },
-            {
-                category: 'africa', tag: 'Africa',
-                title: 'Shooting Kenya: A Field Guide to East Africa\'s Most Cinematic Locations',
-                excerpt: 'From the Rift Valley to the Nairobi CBD, a curated guide to the locations that define our visual identity.',
-                date: 'Dec 2024', readTime: '7 min read',
-                image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=500&fit=crop&q=80',
-                author: 'David Kimani', authorImg: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop'
-            },
-            {
-                category: 'interview', tag: 'Interview',
-                title: '"We Were Told African Stories Don\'t Travel." They Were Wrong.',
-                excerpt: 'A conversation with a Nairobi-based director whose debut feature screened at three international festivals in 2024.',
-                date: 'Nov 2024', readTime: '12 min read',
-                image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=500&fit=crop&q=80',
-                author: 'James Odhiambo', authorImg: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop'
-            },
-        ];
-
-        const listArticles = [
-            {
-                category: 'craft', tag: 'Craft',
-                title: 'Sound Design Is Storytelling: Notes from Our Post-Production Suite',
-                excerpt: 'The sounds you don\'t notice are the ones doing the most work.',
-                date: 'Oct 2024', readTime: '5 min',
-                image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=300&fit=crop',
-                author: 'Sarah Muthoni'
-            },
-            {
-                category: 'industry', tag: 'Industry',
-                title: 'What Streaming Has Done to the Documentary Form',
-                excerpt: 'Netflix changed everything. Whether that\'s good or bad depends on what you value.',
-                date: 'Sep 2024', readTime: '9 min',
-                image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
-                author: 'Amina Wanjiku'
-            },
-            {
-                category: 'process', tag: 'Process',
-                title: 'The Edit Is the Film: How We Approach Post-Production',
-                excerpt: 'You don\'t find the film in post. You find the film you actually made.',
-                date: 'Aug 2024', readTime: '7 min',
-                image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop',
-                author: 'Brian Otieno'
-            },
-            {
-                category: 'africa', tag: 'Africa',
-                title: 'The Rise of the African Creative Economy — and What It Means for Film',
-                excerpt: 'Capital is moving. Audiences are growing. The infrastructure is being built. This is the moment.',
-                date: 'Jul 2024', readTime: '11 min',
-                image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&h=300&fit=crop',
-                author: 'James Odhiambo'
-            },
-        ];
-
-        let currentFilter = 'all';
-
-        function renderGrid(filter) {
-            const filtered = filter === 'all' ? articles : articles.filter(a => a.category === filter);
-            document.getElementById('articlesGrid').innerHTML = filtered.map(a => `
-                <a href="#" class="article-card">
-                    <div class="article-card-image">
-                        <img src="${a.image}" alt="${a.title}" loading="lazy">
-                    </div>
-                    <div class="article-card-body">
-                        <div class="article-card-meta">
-                            <span class="article-card-category">${a.tag}</span>
-                            <span class="article-card-date">${a.date}</span>
-                        </div>
-                        <h3 class="article-card-title">${a.title}</h3>
-                        <p class="article-card-excerpt">${a.excerpt}</p>
-                        <div class="article-card-author">
-                            <img src="${a.authorImg}" alt="${a.author}" class="author-avatar">
-                            <span class="author-name">${a.author}</span>
-                            <span class="author-read-time">${a.readTime}</span>
-                        </div>
-                    </div>
-                </a>
-            `).join('');
-
-            // Re-observe cards
-            document.querySelectorAll('.article-card').forEach((el, i) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = `opacity 0.6s ${i * 0.08}s ease, transform 0.6s ${i * 0.08}s ease`;
-                cardObserver.observe(el);
-            });
-        }
-
-        function renderList(filter) {
-            const filtered = filter === 'all' ? listArticles : listArticles.filter(a => a.category === filter);
-            document.getElementById('articlesList').innerHTML = filtered.map(a => `
-                <a href="#" class="list-article">
-                    <div class="list-article-thumb">
-                        <img src="${a.image}" alt="${a.title}" loading="lazy">
-                    </div>
-                    <div class="list-article-body">
-                        <p class="list-article-category">${a.tag}</p>
-                        <h3 class="list-article-title">${a.title}</h3>
-                        <p class="list-article-excerpt">${a.excerpt}</p>
-                    </div>
-                    <div class="list-article-right">
-                        <span class="list-article-date">${a.date}</span>
-                        <span class="list-article-arrow">→</span>
-                    </div>
-                </a>
-            `).join('');
-        }
-
-        // Observer
-        const cardObserver = new IntersectionObserver(entries => {
+        // Scroll fade-in
+        const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.08 });
 
-        // Filter
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                renderGrid(currentFilter);
-                renderList(currentFilter);
-            });
+        document.querySelectorAll('.culture-item, .role-card, .perk-item').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.7s ${i * 0.06}s ease, transform 0.7s ${i * 0.06}s ease`;
+            observer.observe(el);
         });
 
-        // Init
-        renderGrid('all');
-        renderList('all');
+        // Speculative form
+        document.getElementById('specSubmit').addEventListener('click', () => {
+            const name  = document.getElementById('specName').value.trim();
+            const email = document.getElementById('specEmail').value.trim();
+            const role  = document.getElementById('specRole').value;
+            const reel  = document.getElementById('specReel').value.trim();
+            if (!name || !email || !role) return;
 
-        // Newsletter
-        document.querySelector('.newsletter-submit').addEventListener('click', () => {
-            const input = document.querySelector('.newsletter-input');
-            if (input.value) {
-                input.value = '';
-                input.placeholder = 'You\'re in. Welcome aboard.';
-                input.style.color = 'var(--red)';
-            }
+            // In production: POST to your backend / email service here
+            document.getElementById('specForm').style.display = 'none';
+            document.getElementById('specSuccess').style.display = 'block';
         });
     </script>
 </body>
