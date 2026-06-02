@@ -176,8 +176,8 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     background: none;
     border: none;
     cursor: pointer;
@@ -187,15 +187,16 @@ footer {
 }
 .nav-hamburger span {
     display: block;
-    width: 22px;
-    height: 1px;
+    width: 26px;
+    height: 2px;
     background: var(--white);
+    border-radius: 1px;
     transition: transform 0.4s ease, opacity 0.3s ease;
     position: absolute;
 }
-.nav-hamburger span:nth-child(1) { transform: translateY(-6px); }
+.nav-hamburger span:nth-child(1) { transform: translateY(-8px); }
 .nav-hamburger span:nth-child(2) { transform: translateY(0); }
-.nav-hamburger span:nth-child(3) { transform: translateY(6px); }
+.nav-hamburger span:nth-child(3) { transform: translateY(8px); }
 .nav-hamburger.active span:nth-child(1) { transform: translateY(0) rotate(45deg); }
 .nav-hamburger.active span:nth-child(2) { opacity: 0; }
 .nav-hamburger.active span:nth-child(3) { transform: translateY(0) rotate(-45deg); }
