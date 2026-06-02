@@ -1,7 +1,7 @@
 // Fetch projects from Supabase
 async function fetchProjects() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
             .from('projects')
             .select('*')
             .order('order_index', { ascending: true });
@@ -17,7 +17,7 @@ async function fetchProjects() {
 // Fetch featured projects
 async function fetchFeaturedProjects() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
             .from('projects')
             .select('*')
             .eq('featured', true)

@@ -1,7 +1,7 @@
 // Fetch single project by slug
 async function fetchProject(slug) {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
             .from('projects')
             .select('*')
             .eq('slug', slug)
@@ -18,7 +18,7 @@ async function fetchProject(slug) {
 // Fetch all projects for navigation
 async function fetchAllProjects() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
             .from('projects')
             .select('slug, title')
             .order('order_index', { ascending: true });
