@@ -292,3 +292,71 @@ body.menu-open { overflow: hidden; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
 }
+
+/* ── ENHANCED MOBILE RESPONSIVENESS ── */
+@media (max-width: 480px) {
+    /* Navigation */
+    .main-nav { padding: 16px 20px; }
+    .nav-logo { font-size: 14px; }
+
+    /* Mobile nav menu */
+    .mobile-nav-menu a { font-size: 28px; }
+    .mobile-nav-social { gap: 24px; }
+    .mobile-nav-menu li { margin: 20px 0; }
+
+    /* Footer */
+    .footer-tagline { font-size: 11px; }
+    .footer-col-title { font-size: 9px; letter-spacing: 2px; }
+    .footer-links a { font-size: 12px; }
+    .footer-social { gap: 20px; }
+
+    /* Touch-friendly buttons */
+    .btn, button, a.btn {
+        min-height: 48px;
+        padding: 14px 24px;
+        font-size: 14px;
+    }
+
+    /* Form elements */
+    input, textarea, select {
+        font-size: 16px; /* Prevents iOS zoom on focus */
+        padding: 14px 16px;
+    }
+
+    /* Typography scaling */
+    h1, .hero-title { font-size: 36px !important; }
+    h2, .section-title { font-size: 28px !important; }
+    h3 { font-size: 22px !important; }
+    p, body { font-size: 15px !important; line-height: 1.6; }
+
+    /* Work cards */
+    .work-card { min-height: 200px; }
+    .work-card-title { font-size: 18px; }
+    .work-card-meta { font-size: 12px; }
+
+    /* Spacing adjustments */
+    section, .section { padding: 60px 20px; }
+}
+
+@media (max-width: 375px) {
+    .main-nav { padding: 14px 16px; }
+    .nav-logo { font-size: 13px; }
+
+    .mobile-nav-menu a { font-size: 24px; }
+
+    h1, .hero-title { font-size: 28px !important; }
+    h2, .section-title { font-size: 24px !important; }
+
+    .footer-inner { padding: 40px 16px 24px; }
+
+    section, .section { padding: 48px 16px; }
+}
+
+/* ── REDUCE MOTION FOR ACCESSIBILITY ── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

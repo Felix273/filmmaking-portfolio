@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOLD UNITY CREATIVE — Creative Production</title>
+    <meta name="description" content="Bold Unity Creative is a Kenya-based creative production company specializing in films, documentaries, commercials, and brand storytelling.">
+    <meta name="keywords" content="film production, documentary, commercial, Kenya, filmmaking, brand video, creative agency">
+    <meta name="author" content="Bold Unity Creative">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BOLD UNITY CREATIVE — Creative Production">
+    <meta property="og:description" content="Kenya-based creative production company specializing in films, documentaries, commercials, and brand storytelling.">
+    <meta property="og:url" content="https://boldunitycreative.com">
+    <meta property="og:site_name" content="Bold Unity Creative">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BOLD UNITY CREATIVE — Creative Production">
+    <meta name="twitter:description" content="Kenya-based creative production company specializing in films, documentaries, commercials, and brand storytelling.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c8102e'/%3E%3Ctext x='50%25' y='55%25' font-size='20' fill='%23f5f2ed' text-anchor='middle' dominant-baseline='middle' font-family='serif'%3EB%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Suisse+Intl:wght@300;400&display=swap" rel="stylesheet">
@@ -654,14 +673,67 @@
             .nav-links { gap: 20px; }
             .nav-links a { font-size: 10px; letter-spacing: 1.5px; }
             .hero-content { padding: 0 24px 48px; }
+            .hero-title { font-size: 42px; }
+            .hero-eyebrow { font-size: 11px; letter-spacing: 2px; }
+            .hero-tagline { font-size: 14px; }
             .statement-section { grid-template-columns: 1fr; gap: 24px; padding: 80px 24px; }
+            .statement-text { font-size: 28px; }
             .work-section { padding: 0 24px 80px; }
+            .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
             .work-grid { grid-template-columns: 1fr; }
             .work-card:nth-child(n) { grid-column: span 1; aspect-ratio: 16/9; }
             .featured-grid { grid-template-columns: 1fr; }
             .services-grid { grid-template-columns: 1fr; }
             .footer-top { grid-template-columns: 1fr; gap: 40px; }
             .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+            .marquee-strip { padding: 20px 0; }
+            .marquee-item { font-size: 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .main-nav { padding: 16px 20px; }
+            .hero-title { font-size: 32px; line-height: 1.1; }
+            .hero-tagline { font-size: 13px; }
+            .hero-content { padding: 0 20px 40px; }
+            .hero-bottom { flex-direction: column; gap: 24px; align-items: flex-start; }
+            .hero-scroll { display: none; }
+
+            .statement-section { padding: 60px 20px; }
+            .statement-text { font-size: 22px; line-height: 1.4; }
+
+            .work-section { padding: 0 20px 60px; }
+            .section-title { font-size: 24px; }
+
+            .work-card-info { padding: 16px; }
+            .work-card-title { font-size: 18px; }
+            .work-card-meta { font-size: 11px; }
+
+            .featured-card-content { padding: 20px; }
+            .featured-card-title { font-size: 20px; }
+
+            .services-section { padding: 60px 20px; }
+            .service-title { font-size: 20px; }
+
+            .footer-section { padding: 60px 20px; }
+            .footer-top { gap: 32px; }
+        }
+
+        @media (max-width: 375px) {
+            .hero-title { font-size: 28px; }
+            .hero-eyebrow { font-size: 10px; }
+            .statement-text { font-size: 20px; }
+
+            .work-card-title { font-size: 16px; }
+            .section-title { font-size: 22px; }
+        }
+
+        /* Accessibility: Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
