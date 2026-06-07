@@ -1,13 +1,13 @@
-/* Project Detail Styles */
 .project-detail-container {
-    padding-top: 80px;
+    padding-top: 0;
 }
 
 .project-hero {
     width: 100%;
-    height: 70vh;
+    height: 86vh;
     background: #000;
     position: relative;
+    overflow: hidden;
 }
 
 .video-container {
@@ -17,10 +17,31 @@
 }
 
 .video-container video,
+.video-container iframe,
 .video-container img {
     width: 100%;
     height: 100%;
+    border: 0;
+}
+
+.video-container video,
+.video-container img {
     object-fit: cover;
+    filter: grayscale(18%) brightness(0.78) contrast(1.08);
+}
+
+.video-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.18) 48%, rgba(10,10,10,0.2) 100%),
+        linear-gradient(to right, rgba(10,10,10,0.36), transparent 42%, rgba(10,10,10,0.22));
+    pointer-events: none;
+}
+
+.video-container:has(iframe)::after {
+    display: none;
 }
 
 .play-button {
@@ -30,13 +51,15 @@
     transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(245,242,237,0.92);
+    border: 1px solid rgba(245,242,237,0.36);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
+    z-index: 2;
 }
 
 .play-button:hover {
@@ -48,23 +71,25 @@
     content: '';
     width: 0;
     height: 0;
-    border-left: 20px solid #ff0054;
+    border-left: 20px solid var(--red);
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
     margin-left: 5px;
 }
 
 .project-info {
-    max-width: 1000px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 80px 40px;
+    padding: 100px 48px 70px;
 }
 
 .project-meta {
     display: flex;
-    gap: 60px;
-    margin-bottom: 40px;
+    gap: 76px;
+    margin-bottom: 46px;
     flex-wrap: wrap;
+    border-top: 1px solid rgba(245,242,237,0.12);
+    padding-top: 26px;
 }
 
 .meta-item {
@@ -74,49 +99,60 @@
 }
 
 .meta-label {
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 3px;
+    color: var(--gray);
 }
 
 .meta-value {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     color: #fff;
 }
 
 .project-title {
-    font-size: clamp(40px, 6vw, 72px);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 30px;
+    font-family: var(--font-serif);
+    font-size: clamp(54px, 9vw, 124px);
+    font-weight: 900;
+    line-height: 0.92;
+    margin-bottom: 34px;
     color: #fff;
+    letter-spacing: -1px;
 }
 
 .project-description {
-    font-size: 20px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.8);
+    max-width: 760px;
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3vw, 42px);
+    line-height: 1.25;
+    color: rgba(245,242,237,0.9);
 }
 
 .project-section {
-    max-width: 1000px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 60px 40px;
+    padding: 72px 48px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 80px;
+    border-top: 1px solid rgba(245,242,237,0.1);
 }
 
 .section-heading {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 24px;
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 0;
     color: #fff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
 }
 
 .section-content {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(245,242,237,0.68);
 }
 
 .section-content p {
@@ -124,10 +160,10 @@
 }
 
 .project-gallery {
-    padding: 60px 0;
+    padding: 86px 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    gap: 2px;
+    gap: 3px;
 }
 
 .gallery-item {
@@ -140,24 +176,26 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s;
+    filter: grayscale(18%) contrast(1.05);
+    transition: transform 0.7s, filter 0.5s;
 }
 
 .gallery-item:hover img {
     transform: scale(1.05);
+    filter: grayscale(0%) contrast(1.08);
 }
 
 .project-navigation {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    margin-top: 100px;
+    gap: 1px;
+    margin-top: 80px;
     background: #000;
 }
 
 .nav-project {
-    padding: 60px 40px;
-    background: #ff0054;
+    padding: 70px 48px;
+    background: var(--red);
     text-decoration: none;
     color: #fff;
     transition: all 0.3s;
@@ -167,7 +205,7 @@
 }
 
 .nav-project:hover {
-    background: rgba(255, 0, 84, 0.8);
+    background: #a90d27;
 }
 
 .nav-project.prev {
@@ -186,17 +224,80 @@
 }
 
 .nav-title {
-    font-size: 24px;
-    font-weight: 700;
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.floating-footer {
+    position: static;
+    border-top: 1px solid rgba(245,242,237,0.1);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    background: var(--black);
+}
+
+.footer-left,
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.footer-left p,
+.footer-link {
+    margin: 0;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+}
+
+.footer-left strong {
+    color: var(--white);
+}
+
+.footer-link:hover {
+    color: var(--white);
 }
 
 @media (max-width: 768px) {
+    .main-nav {
+        justify-content: center;
+    }
+
+    .main-nav .nav-links {
+        display: none;
+    }
+
     .project-hero {
-        height: 50vh;
+        height: 58vh;
+    }
+
+    .project-info {
+        padding: 72px 24px 48px;
     }
     
     .project-meta {
-        gap: 30px;
+        gap: 26px;
+    }
+
+    .project-title {
+        font-size: 42px;
+    }
+
+    .project-description {
+        font-size: 24px;
+    }
+
+    .project-section {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 54px 24px;
     }
     
     .project-gallery {
@@ -205,5 +306,18 @@
     
     .project-navigation {
         grid-template-columns: 1fr;
+    }
+
+    .floating-footer {
+        padding: 36px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-left,
+    .footer-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
     }
 }

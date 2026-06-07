@@ -28,28 +28,17 @@
 </head>
 <body>
     <nav class="main-nav">
-        
-        <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    <div class="nav-container">
-            <ul class="nav-left">
-                <li><a href="work.html">Work</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="team.html">Team</a></li>
-                <li><a href="ideas.html">Ideas</a></li>
-            </ul>
-            <div class="nav-logo visible" id="navLogo">
-                <a href="index.html" style="color: #fff; text-decoration: none;">BOLD UNITY CREATIVE</a>
-            </div>
-            <ul class="nav-right">
-                <li><a href="videos.html">Videos</a></li>
-                <li><a href="careers.html">Careers</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
+        <ul class="nav-links">
+            <li><a href="work.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+        </ul>
+        <a href="index.html" class="nav-logo" id="navLogo">BOLD UNITY CREATIVE</a>
+        <ul class="nav-links">
+            <li><a href="ideas.html">Ideas</a></li>
+            <li><a href="videos.html">Videos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
     </nav>
 
     <div class="project-detail-container">
@@ -121,52 +110,5 @@
     <script src="js/navigation.js"></script>
     <script src="js/project-detail.js"></script>
 
-    <div class="mobile-nav-overlay" id="mobileNav">
-        <ul class="mobile-nav-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="work.html">Work</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="team.html">Team</a></li>
-            <li><a href="ideas.html">Ideas</a></li>
-            <li><a href="videos.html">Videos</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="careers.html">Careers</a></li>
-        </ul>
-        <div class="mobile-nav-social">
-            <a href="#" aria-label="Instagram">Instagram</a>
-            <a href="#" aria-label="Vimeo">Vimeo</a>
-            <a href="#" aria-label="LinkedIn">LinkedIn</a>
-        </div>
-    </div>
-
-    <script>
-        (function() {
-            var btn = document.getElementById("navHamburger");
-            var overlay = document.getElementById("mobileNav");
-            if (!btn || !overlay) return;
-            btn.addEventListener("click", function() {
-                var open = document.body.classList.toggle("menu-open");
-                btn.classList.toggle("active", open);
-                overlay.classList.toggle("active", open);
-                btn.setAttribute("aria-expanded", open ? "true" : "false");
-            });
-            overlay.querySelectorAll("a").forEach(function(a) {
-                a.addEventListener("click", function() {
-                    document.body.classList.remove("menu-open");
-                    btn.classList.remove("active");
-                    overlay.classList.remove("active");
-                    btn.setAttribute("aria-expanded", "false");
-                });
-            });
-            document.addEventListener("keydown", function(e) {
-                if (e.key === "Escape") {
-                    document.body.classList.remove("menu-open");
-                    btn.classList.remove("active");
-                    overlay.classList.remove("active");
-                    btn.setAttribute("aria-expanded", "false");
-                }
-            });
-        })();
-    </script>
 </body>
 </html>
