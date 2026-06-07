@@ -341,6 +341,92 @@
     }
   ],
 
+  "videos": [
+    {
+      "id": "v001",
+      "title": "BOLD UNITY CREATIVE Reel",
+      "client": "FOB Media",
+      "type": "Showreel",
+      "category": "reel",
+      "duration": "01:45",
+      "year": "2025",
+      "description": "A fast-cut overview of our film, commercial, documentary, and music video work across East Africa.",
+      "image": "assets/images/videos/showreel.jpg",
+      "image_fallback": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&h=675&fit=crop",
+      "embed_url": "https://player.vimeo.com/video/76979871"
+    },
+    {
+      "id": "v002",
+      "title": "The Last Horizon Trailer",
+      "client": "Independent",
+      "type": "Trailer",
+      "category": "film",
+      "duration": "02:12",
+      "year": "2024",
+      "description": "A dramatic trailer cut for the feature film following three strangers across the Kenyan highlands.",
+      "image": "assets/images/projects/the-last-horizon.jpg",
+      "image_fallback": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200&h=675&fit=crop",
+      "project_id": "001",
+      "embed_url": "https://player.vimeo.com/video/1084537"
+    },
+    {
+      "id": "v003",
+      "title": "Urban Chronicles: Series Teaser",
+      "client": "Al Jazeera",
+      "type": "Documentary Teaser",
+      "category": "documentary",
+      "duration": "01:08",
+      "year": "2024",
+      "description": "A documentary teaser built around street-level portraits, location sound, and intimate moments in Nairobi.",
+      "image": "assets/images/projects/urban-chronicles.jpg",
+      "image_fallback": "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?w=1200&h=675&fit=crop",
+      "project_id": "002",
+      "embed_url": "https://player.vimeo.com/video/22439234"
+    },
+    {
+      "id": "v004",
+      "title": "Velocity Case Film",
+      "client": "Nike",
+      "type": "Commercial",
+      "category": "commercial",
+      "duration": "00:45",
+      "year": "2024",
+      "description": "A short-form case film showing how motion, speed, and breath shaped the final campaign language.",
+      "image": "assets/images/projects/velocity.jpg",
+      "image_fallback": "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1200&h=675&fit=crop",
+      "project_id": "003",
+      "embed_url": "https://player.vimeo.com/video/146022717"
+    },
+    {
+      "id": "v005",
+      "title": "Neon Dreams Music Video",
+      "client": "Sauti Sol",
+      "type": "Music Video",
+      "category": "music",
+      "duration": "03:28",
+      "year": "2023",
+      "description": "A color-forward music video language built from Nairobi night scenes, movement, and performance energy.",
+      "image": "assets/images/projects/neon-dreams.jpg",
+      "image_fallback": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&h=675&fit=crop",
+      "project_id": "006",
+      "embed_url": "https://player.vimeo.com/video/18259062"
+    },
+    {
+      "id": "v006",
+      "title": "Golden Hour Tourism Film",
+      "client": "Kenya Tourism Board",
+      "type": "Brand Film",
+      "category": "brand",
+      "duration": "01:30",
+      "year": "2022",
+      "description": "A warm destination film shaped around landscape, pace, and the visual rhythm of travel.",
+      "image": "assets/images/projects/golden-hour.jpg",
+      "image_fallback": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=675&fit=crop",
+      "project_id": "009",
+      "embed_url": "https://player.vimeo.com/video/19231868"
+    }
+  ],
+
   "settings": {
     "company_name": "FOB Media",
     "tagline": "Creating impact through film",

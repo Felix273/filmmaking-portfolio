@@ -95,6 +95,17 @@
     return list.find(function (a) { return a.id === heroId; }) || list[0] || null;
   }
 
+  function getVideos(filter) {
+    if (!_data) return [];
+    var list = _data.videos || [];
+    return (!filter || filter === 'all') ? list : list.filter(function (v) { return v.category === filter; });
+  }
+
+  function getFeaturedVideo() {
+    if (!_data) return null;
+    return (_data.videos || [])[0] || null;
+  }
+
   function getSettings() {
     return (_data && _data.settings) || {};
   }
@@ -231,6 +242,41 @@
     ].join('');
   }
 
+  function renderVideoCard(v) {
+    var projectLink = v.project_id ? 'project-detail.html?id=' + v.project_id : 'work.html';
+    return [
+      '<article class="video-card" data-category="', v.category, '">',
+        '<button class="video-thumb" type="button" data-embed="', v.embed_url, '" aria-label="Play ', v.title, '">',
+          '<img src="', img(v), '" alt="', v.title, '" loading="lazy">',
+          '<span class="video-play" aria-hidden="true"></span>',
+          '<span class="video-duration">', v.duration, '</span>',
+        '</button>',
+        '<div class="video-card-body">',
+          '<div class="video-meta">',
+            '<span>', v.type, '</span>',
+            '<span>', v.year, '</span>',
+          '</div>',
+          '<h3 class="video-title">', v.title, '</h3>',
+          '<p class="video-desc">', v.description, '</p>',
+          '<a class="video-project-link" href="', projectLink, '">View project</a>',
+        '</div>',
+      '</article>',
+    ].join('');
+  }
+
+  function renderVideoRow(v, index) {
+    var num = String(index + 1).padStart(2, '0');
+    return [
+      '<button class="video-row" type="button" data-embed="', v.embed_url, '">',
+        '<span class="video-row-num">', num, '</span>',
+        '<span class="video-row-title">', v.title, '</span>',
+        '<span class="video-row-client">', v.client, '</span>',
+        '<span class="video-row-type">', v.type, '</span>',
+        '<span class="video-row-duration">', v.duration, '</span>',
+      '</button>',
+    ].join('');
+  }
+
   // ── Utilities ──────────────────────────────────────────────
 
   function observeFadeIn(selector, stagger) {
@@ -287,6 +333,8 @@
     getTeamMembers     : getTeamMembers,
     getArticles        : getArticles,
     getHeroArticle     : getHeroArticle,
+    getVideos          : getVideos,
+    getFeaturedVideo   : getFeaturedVideo,
     getSettings        : getSettings,
     renderWorkRow      : renderWorkRow,
     renderWorkCard     : renderWorkCard,
@@ -296,6 +344,8 @@
     renderTeamCard     : renderTeamCard,
     renderArticleCard  : renderArticleCard,
     renderListArticle  : renderListArticle,
+    renderVideoCard    : renderVideoCard,
+    renderVideoRow     : renderVideoRow,
     observeFadeIn      : observeFadeIn,
     initCursor         : initCursor,
   };
