@@ -97,8 +97,8 @@
             position: relative;
             min-height: 92vh;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(340px, 520px);
-            gap: 48px;
+            grid-template-columns: minmax(0, 1fr) minmax(360px, 560px);
+            gap: 72px;
             align-items: end;
             padding: 180px 48px 64px;
             overflow: hidden;
@@ -115,7 +115,9 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(10,10,10,0.96) 0%, rgba(10,10,10,0.5) 48%, rgba(10,10,10,0.2) 100%);
+            background:
+                linear-gradient(to right, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.28) 48%, rgba(10,10,10,0.72) 100%),
+                linear-gradient(to top, rgba(10,10,10,0.98) 0%, rgba(10,10,10,0.46) 54%, rgba(10,10,10,0.16) 100%);
         }
         .hero-copy, .hero-panel {
             position: relative;
@@ -155,7 +157,9 @@
         }
         .hero-panel {
             border-top: 1px solid rgba(245,242,237,0.2);
+            border-bottom: 1px solid rgba(245,242,237,0.12);
             padding-top: 28px;
+            padding-bottom: 30px;
             animation: fadeUp 0.8s 0.74s ease forwards;
             opacity: 0;
         }
@@ -173,7 +177,19 @@
             font-family: var(--font-serif);
             font-size: clamp(28px, 4vw, 48px);
             line-height: 1.05;
-            margin-bottom: 22px;
+            margin-bottom: 18px;
+        }
+        .hero-panel-desc {
+            max-width: 460px;
+            margin-bottom: 28px;
+            font-size: 13px;
+            line-height: 1.85;
+            color: rgba(245,242,237,0.62);
+        }
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 22px;
         }
         .hero-play {
             width: 84px;
@@ -201,6 +217,41 @@
             border-bottom: 12px solid transparent;
             margin-left: 5px;
         }
+        .hero-action-copy {
+            font-size: 10px;
+            letter-spacing: 3px;
+            line-height: 1.7;
+            text-transform: uppercase;
+            color: rgba(245,242,237,0.55);
+        }
+        .hero-stats {
+            position: relative;
+            z-index: 2;
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            border-top: 1px solid rgba(245,242,237,0.12);
+            animation: fadeUp 0.8s 0.9s ease forwards;
+            opacity: 0;
+        }
+        .hero-stat {
+            padding-top: 22px;
+        }
+        .hero-stat-value {
+            display: block;
+            font-family: var(--font-serif);
+            font-size: clamp(24px, 3vw, 42px);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .hero-stat-label {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(28px); }
@@ -208,10 +259,15 @@
         }
 
         .filter-bar {
-            padding: 22px 48px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 18px 48px;
             display: flex;
             gap: 4px;
             border-bottom: 1px solid rgba(245,242,237,0.08);
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(16px);
             overflow-x: auto;
         }
         .filter-btn {
@@ -234,7 +290,7 @@
         }
 
         .watch-grid-section {
-            padding: 96px 48px 120px;
+            padding: 110px 48px 130px;
         }
         .section-header {
             display: flex;
@@ -251,18 +307,29 @@
             text-transform: uppercase;
             color: var(--gray);
         }
+        .section-note {
+            max-width: 420px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--gray);
+            text-align: right;
+        }
         .video-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: 3px;
+            gap: 30px 3px;
         }
         .video-card {
             grid-column: span 4;
             border-top: 1px solid rgba(245,242,237,0.08);
             padding-top: 20px;
         }
-        .video-card:nth-child(1),
-        .video-card:nth-child(2) { grid-column: span 6; }
+        .video-card:nth-child(1) { grid-column: span 8; }
+        .video-card:nth-child(2) { grid-column: span 4; }
+        .video-card:nth-child(5),
+        .video-card:nth-child(6) { grid-column: span 6; }
+        .video-card:nth-child(1) .video-title { font-size: clamp(30px, 4vw, 56px); }
+        .video-card:nth-child(1) .video-desc { max-width: 680px; }
         .video-thumb {
             position: relative;
             width: 100%;
@@ -274,6 +341,9 @@
             cursor: none;
             margin-bottom: 22px;
         }
+        .video-card:nth-child(2) .video-thumb { aspect-ratio: 4 / 5; }
+        .video-card:nth-child(5) .video-thumb,
+        .video-card:nth-child(6) .video-thumb { aspect-ratio: 3 / 2; }
         .video-thumb img {
             width: 100%;
             height: 100%;
@@ -359,7 +429,7 @@
         .video-archive {
             background: var(--white);
             color: var(--black);
-            padding: 96px 48px 120px;
+            padding: 110px 48px 120px;
         }
         .video-archive .section-header {
             border-top-color: rgba(10,10,10,0.14);
@@ -371,7 +441,7 @@
             grid-template-columns: 60px 1fr 220px 180px 90px;
             gap: 24px;
             align-items: center;
-            padding: 28px 0;
+            padding: 30px 0;
             border: 0;
             border-bottom: 1px solid rgba(10,10,10,0.12);
             background: none;
@@ -382,7 +452,7 @@
         }
         .video-row-title {
             font-family: var(--font-serif);
-            font-size: clamp(22px, 3vw, 38px);
+            font-size: clamp(22px, 3.2vw, 42px);
             font-weight: 700;
             transition: transform 0.35s;
         }
@@ -487,6 +557,10 @@
             line-height: 1;
             cursor: none;
         }
+        .modal-close:hover {
+            border-color: rgba(245,242,237,0.7);
+            background: rgba(245,242,237,0.08);
+        }
 
         .nav-hamburger {
             display: none;
@@ -583,8 +657,10 @@
         body.menu-open { overflow: hidden; }
 
         @media (max-width: 1024px) {
-            .videos-hero { grid-template-columns: 1fr; min-height: 86vh; }
-            .video-card { grid-column: span 6; }
+            .videos-hero { grid-template-columns: 1fr; min-height: 86vh; gap: 44px; }
+            .hero-stats { grid-template-columns: repeat(3, 1fr); }
+            .video-card,
+            .video-card:nth-child(n) { grid-column: span 6; }
             .video-row { grid-template-columns: 44px 1fr 120px 70px; }
             .video-row-type { display: none; }
             .footer-top { grid-template-columns: 1fr 1fr; gap: 48px; }
@@ -597,11 +673,14 @@
             .nav-logo { font-size: 15px; }
             .videos-hero { padding: 140px 24px 48px; min-height: 82vh; }
             .hero-title { font-size: 48px; }
+            .hero-stats { grid-template-columns: 1fr; gap: 18px; }
             .filter-bar { padding: 16px 24px; flex-wrap: wrap; gap: 8px; }
             .watch-grid-section, .video-archive { padding: 64px 24px 80px; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+            .section-note { text-align: left; }
             .video-grid { grid-template-columns: 1fr; }
             .video-card:nth-child(n) { grid-column: span 1; }
+            .video-card:nth-child(n) .video-thumb { aspect-ratio: 16 / 9; }
             .video-row { grid-template-columns: 34px 1fr 58px; gap: 14px; padding: 22px 0; }
             .video-row-client, .video-row-type { display: none; }
             .video-modal { padding: 20px; }
@@ -614,6 +693,7 @@
             .videos-hero { padding: 120px 20px 44px; }
             .hero-title { font-size: 38px; line-height: 0.95; }
             .hero-text { font-size: 14px; }
+            .hero-actions { align-items: flex-start; }
             .hero-play { width: 70px; height: 70px; }
             .filter-btn { padding: 8px 14px; font-size: 11px; }
             .watch-grid-section, .video-archive, footer { padding-left: 20px; padding-right: 20px; }
@@ -668,7 +748,25 @@
                 <span id="heroVideoDuration">00:00</span>
             </div>
             <h2 class="hero-panel-title" id="heroVideoTitle">BOLD UNITY CREATIVE Reel</h2>
-            <button class="hero-play" id="heroPlay" type="button" aria-label="Play featured video"></button>
+            <p class="hero-panel-desc" id="heroVideoDesc">A curated entry point into the motion work: reels, trailers, case films, and campaign cuts.</p>
+            <div class="hero-actions">
+                <button class="hero-play" id="heroPlay" type="button" aria-label="Play featured video"></button>
+                <span class="hero-action-copy">Play<br>Featured Cut</span>
+            </div>
+        </div>
+        <div class="hero-stats" aria-label="Video archive summary">
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="heroTotalVideos">00</span>
+                <span class="hero-stat-label">Playable Cuts</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="heroFormats">00</span>
+                <span class="hero-stat-label">Formats</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="heroYears">2021-2025</span>
+                <span class="hero-stat-label">Archive Years</span>
+            </div>
         </div>
     </header>
 
@@ -686,7 +784,7 @@
         <section class="watch-grid-section">
             <div class="section-header">
                 <span class="section-label">Featured Videos</span>
-                <span class="section-label" id="videoCount">0 Cuts</span>
+                <p class="section-note" id="videoCount">0 Cuts</p>
             </div>
             <div class="video-grid" id="videoGrid"></div>
         </section>
@@ -694,7 +792,7 @@
         <section class="video-archive">
             <div class="section-header">
                 <span class="section-label">Archive</span>
-                <span class="section-label">Play Any Cut</span>
+                <p class="section-note">Every project has a motion cut, from campaign films to documentary teasers and music videos.</p>
             </div>
             <div id="videoArchive"></div>
         </section>
@@ -802,6 +900,12 @@
             }
 
             FOBData.load().then(function () {
+                var allVideos = FOBData.getVideos();
+                var years = allVideos.map(function (video) { return Number(video.year); }).filter(Boolean);
+                var categories = allVideos.reduce(function (set, video) {
+                    if (video.category) set[video.category] = true;
+                    return set;
+                }, {});
                 var featured = FOBData.getFeaturedVideo();
                 if (featured) {
                     activeEmbed = featured.embed_url;
@@ -809,7 +913,11 @@
                     document.getElementById('heroVideoType').textContent = featured.type;
                     document.getElementById('heroVideoDuration').textContent = featured.duration;
                     document.getElementById('heroVideoTitle').textContent = featured.title;
+                    document.getElementById('heroVideoDesc').textContent = featured.description;
                 }
+                document.getElementById('heroTotalVideos').textContent = String(allVideos.length).padStart(2, '0');
+                document.getElementById('heroFormats').textContent = String(Object.keys(categories).length).padStart(2, '0');
+                document.getElementById('heroYears').textContent = Math.min.apply(null, years) + '-' + Math.max.apply(null, years);
                 renderVideos('all');
             });
 
