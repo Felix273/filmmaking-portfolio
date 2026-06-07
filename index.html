@@ -115,6 +115,74 @@
             color: var(--white);
         }
 
+        .nav-hamburger {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(245,242,237,0.22);
+            border-radius: 50%;
+            background: rgba(10,10,10,0.18);
+            cursor: none;
+            position: relative;
+            z-index: 10002;
+        }
+
+        .nav-hamburger span {
+            position: absolute;
+            left: 13px;
+            width: 18px;
+            height: 1px;
+            background: var(--white);
+            transition: transform 0.3s ease, opacity 0.25s ease;
+        }
+
+        .nav-hamburger span:nth-child(1) { top: 16px; }
+        .nav-hamburger span:nth-child(2) { top: 21px; }
+        .nav-hamburger span:nth-child(3) { top: 26px; }
+        .nav-hamburger.active span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+        .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.active span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+        .mobile-nav-panel {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            background: rgba(10,10,10,0.97);
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .mobile-nav-panel.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        .mobile-nav-list {
+            list-style: none;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .mobile-nav-list a {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 10vw, 56px);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .mobile-nav-list a:hover { color: var(--red); }
+
+        body.menu-open { overflow: hidden; }
+
         /* ─── HERO ─── */
         .hero {
             position: relative;
@@ -805,9 +873,24 @@
         }
 
         @media (max-width: 768px) {
-            .main-nav { padding: 20px 24px; }
-            .nav-links { gap: 20px; }
-            .nav-links a { font-size: 10px; letter-spacing: 1.5px; }
+            .main-nav {
+                padding: 16px 20px;
+                justify-content: center;
+                mix-blend-mode: normal;
+            }
+            .main-nav .nav-links { display: none; }
+            .nav-hamburger {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 14px;
+            }
+            .nav-logo {
+                font-size: 16px;
+                line-height: 1.05;
+                text-align: center;
+                max-width: 150px;
+            }
             .hero-content { padding: 0 24px 48px; }
             .hero-title { font-size: 42px; }
             .hero-eyebrow { font-size: 11px; letter-spacing: 2px; }
@@ -1100,31 +1183,47 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/navigation.js"></script><script>
+    <script src="js/navigation.js"></script>
+    <script>
         (function() {
             var btn = document.getElementById("navHamburger");
-            var overlay = document.getElementById("mobileNav");
-            if (!btn || !overlay) return;
-            btn.addEventListener("click", function() {
-                var open = document.body.classList.toggle("menu-open");
+            if (!btn) return;
+
+            var overlay = document.createElement("div");
+            overlay.className = "mobile-nav-panel";
+            overlay.setAttribute("aria-hidden", "true");
+            overlay.innerHTML = [
+                '<ul class="mobile-nav-list">',
+                    '<li><a href="index.html">Home</a></li>',
+                    '<li><a href="work.html">Work</a></li>',
+                    '<li><a href="about.html">About</a></li>',
+                    '<li><a href="team.html">Team</a></li>',
+                    '<li><a href="ideas.html">Ideas</a></li>',
+                    '<li><a href="videos.html">Videos</a></li>',
+                    '<li><a href="contact.html">Contact</a></li>',
+                '</ul>'
+            ].join('');
+            document.body.appendChild(overlay);
+
+            function setOpen(open) {
+                document.body.classList.toggle("menu-open", open);
                 btn.classList.toggle("active", open);
                 overlay.classList.toggle("active", open);
                 btn.setAttribute("aria-expanded", open ? "true" : "false");
+                overlay.setAttribute("aria-hidden", open ? "false" : "true");
+            }
+
+            btn.addEventListener("click", function() {
+                setOpen(!overlay.classList.contains("active"));
             });
             overlay.querySelectorAll("a").forEach(function(a) {
                 a.addEventListener("click", function() {
-                    document.body.classList.remove("menu-open");
-                    btn.classList.remove("active");
-                    overlay.classList.remove("active");
-                    btn.setAttribute("aria-expanded", "false");
+                    setOpen(false);
                 });
             });
             document.addEventListener("keydown", function(e) {
                 if (e.key === "Escape") {
-                    document.body.classList.remove("menu-open");
-                    btn.classList.remove("active");
-                    overlay.classList.remove("active");
-                    btn.setAttribute("aria-expanded", "false");
+                    setOpen(false);
                 }
             });
         })();
