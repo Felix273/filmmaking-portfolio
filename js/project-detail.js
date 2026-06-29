@@ -59,20 +59,29 @@
         ].join('');
     }
 
+    function openExternal(url) {
+        if (url) window.open(url, '_blank', 'noopener');
+    }
+
     function renderHero(project, video) {
         var videoContainer = document.getElementById('projectVideo');
         if (!videoContainer) return;
 
         var embedUrl = project.video_url || (video && video.embed_url);
+        var externalUrl = project.source_url || (video && video.external_url);
         videoContainer.innerHTML = [
             '<img src="', imageFor(project), '" alt="', project.title, '">',
-            embedUrl ? '<button class="play-button" type="button" aria-label="Play project video"></button>' : ''
+            (embedUrl || externalUrl) ? '<button class="play-button" type="button" aria-label="View project video"></button>' : ''
         ].join('');
 
         var playButton = videoContainer.querySelector('.play-button');
         if (playButton) {
             playButton.addEventListener('click', function () {
-                playVideo(embedUrl);
+                if (embedUrl) {
+                    playVideo(embedUrl);
+                    return;
+                }
+                openExternal(externalUrl);
             });
         }
     }

@@ -863,9 +863,15 @@
             }
 
             function attachVideoButtons() {
-                document.querySelectorAll('[data-embed]').forEach(function (btn) {
+                document.querySelectorAll('[data-embed], [data-url]').forEach(function (btn) {
                     btn.addEventListener('click', function () {
-                        openVideo(btn.dataset.embed);
+                        if (btn.dataset.embed) {
+                            openVideo(btn.dataset.embed);
+                            return;
+                        }
+                        if (btn.dataset.url) {
+                            window.open(btn.dataset.url, '_blank', 'noopener');
+                        }
                     });
                 });
             }
@@ -902,7 +908,14 @@
             });
 
             heroPlay.addEventListener('click', function () {
-                openVideo(activeEmbed);
+                if (activeEmbed) {
+                    openVideo(activeEmbed);
+                    return;
+                }
+                var featured = FOBData.getFeaturedVideo();
+                if (featured && featured.external_url) {
+                    window.open(featured.external_url, '_blank', 'noopener');
+                }
             });
             modalClose.addEventListener('click', closeVideo);
             modal.addEventListener('click', function (event) {

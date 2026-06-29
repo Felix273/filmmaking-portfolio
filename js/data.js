@@ -244,9 +244,10 @@
 
   function renderVideoCard(v) {
     var projectLink = v.project_id ? 'project-detail.html?id=' + v.project_id : 'work.html';
+    var actionAttr = v.embed_url ? 'data-embed="' + v.embed_url + '"' : 'data-url="' + (v.external_url || projectLink) + '"';
     return [
       '<article class="video-card" data-category="', v.category, '">',
-        '<button class="video-thumb" type="button" data-embed="', v.embed_url, '" aria-label="Play ', v.title, '">',
+        '<button class="video-thumb" type="button" ', actionAttr, ' aria-label="View ', v.title, '">',
           '<img src="', img(v), '" alt="', v.title, '" loading="lazy">',
           '<span class="video-play" aria-hidden="true"></span>',
           '<span class="video-duration">', v.duration, '</span>',
@@ -266,8 +267,9 @@
 
   function renderVideoRow(v, index) {
     var num = String(index + 1).padStart(2, '0');
+    var actionAttr = v.embed_url ? 'data-embed="' + v.embed_url + '"' : 'data-url="' + (v.external_url || '') + '"';
     return [
-      '<button class="video-row" type="button" data-embed="', v.embed_url, '">',
+      '<button class="video-row" type="button" ', actionAttr, '>',
         '<span class="video-row-num">', num, '</span>',
         '<span class="video-row-title">', v.title, '</span>',
         '<span class="video-row-client">', v.client, '</span>',
