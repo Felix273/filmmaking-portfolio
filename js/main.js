@@ -1,41 +1,33 @@
-// Fetch projects from Supabase
+// Fetch projects from the bundled data file.
 async function fetchProjects() {
-    try {
-        const { data, error } = await sbClient
-            .from('projects')
-            .select('*')
-            .order('order_index', { ascending: true });
-        
-        if (error) throw error;
-        return data;
-    } catch (error) {
-        console.error('Error fetching projects:', error);
-        return [];
+    if (window.FOBData) {
+        const data = await window.FOBData.load();
+        if (data) return window.FOBData.getProjects();
     }
+
+    return [];
 }
 
-// Fetch featured projects
+// Fetch featured projects from the bundled data file.
 async function fetchFeaturedProjects() {
-    try {
-        const { data, error } = await sbClient
-            .from('projects')
-            .select('*')
-            .eq('featured', true)
-            .order('order_index', { ascending: true });
-        
-        if (error) throw error;
-        return data;
-    } catch (error) {
-        console.error('Error fetching featured projects:', error);
-        return [];
+    if (window.FOBData) {
+        const data = await window.FOBData.load();
+        if (data) return window.FOBData.getFeaturedProjects();
     }
+
+    return [];
 }
 
 // Create project card HTML
 function createProjectCard(project) {
+    const href = project.slug
+        ? `project-detail.html?project=${project.slug}`
+        : `project-detail.html?id=${project.id}`;
+    const image = project.thumbnail_url || project.image_fallback || project.image || '';
+
     return `
-        <a href="project-detail.html?project=${project.slug}" class="work-card">
-            <img src="${project.thumbnail_url}" alt="${project.title}">
+        <a href="${href}" class="work-card">
+            <img src="${image}" alt="${project.title}">
             <div class="work-overlay">
                 <div class="work-client">${project.client}</div>
                 <div class="work-title">${project.title}</div>
